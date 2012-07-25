@@ -23,7 +23,7 @@ if ( ! function_exists( 'progo_setup' ) ):
  */
 function progo_setup() {
 	// This theme styles the visual editor with editor-style.css to match the theme style
-	add_editor_style( 'css/editor-style.css' );
+	add_editor_style();
 	
 	// This theme uses wp_nav_menu() in two locations
 	register_nav_menus( array(
@@ -38,7 +38,7 @@ function progo_setup() {
 	add_theme_support( 'post-thumbnails' );
 	add_image_size( 'medium', 199, 152, true );
 	add_image_size( 'large', 640, 425, true );
-	add_image_size( 'homeslide', 651, 475, true );
+	add_image_size( 'homeslide', 651, 487, true );
 	
 	// Add custom actions
 	add_action( 'admin_init', 'progo_admin_init' );
@@ -91,7 +91,7 @@ function progo_sitelogo() {
 	if($progo_logo) {
 		echo '<table id="logo"><tr><td><a href="'. get_bloginfo('url') .'"><img src="'. esc_attr( $imagepath ) .'" alt="'. esc_attr( get_bloginfo( 'name' ) ) .'" /></a></td></tr></table>';
 	} else {
-		echo '<a href="'. get_bloginfo('url') .'" id="logo">'. esc_html( get_bloginfo( 'name' ) ) .'<span class="g"></span></a>';
+		echo '<a href="'. get_bloginfo('url') .'" id="logo" title="'. esc_attr( get_bloginfo( 'name' ) ) .'">'. esc_html( get_bloginfo( 'name' ) ) .'</a>';
 	}
 }
 endif;
@@ -433,7 +433,7 @@ function progo_admin_page_styles() {
 				wp_enqueue_style('farbtastic');
 		}
 	}
-	wp_enqueue_style( 'progo_admin', get_bloginfo( 'template_url' ) .'/css/admin-style.css' );
+	wp_enqueue_style( 'progo_admin', get_bloginfo( 'template_url' ) .'/admin-style.css' );
 }
 endif;
 if ( ! function_exists( 'progo_admin_page_scripts' ) ):

@@ -21,8 +21,8 @@
 <body <?php body_class(); ?>><div id="fx">
 <div id="wrap" class="container_12">
 	<div id="page" class="container_12">
-        <div id="hdr" class="container_12">
-        	<div class="grid_8">
+        <div id="hdr">
+        	<div class="grid_8 alpha">
             <?php progo_sitelogo();
             $options = get_option( 'progo_options' );
 			$showdesc = true;
@@ -33,8 +33,12 @@
             <div id="slogan"><?php bloginfo( 'description' ); ?></div>
             <?php } ?>
             </div>
-            <?php get_sidebar('header');
+            <?php 
+			/*
+			get_sidebar('header');
 			$menuclass = 'menu';
 			if ( $options['menuwidth'] == 'auto' ) $menuclass .= ' autow';
-			wp_nav_menu( array( 'container' => 'false', 'theme_location' => 'mainmenu', 'menu_id' => 'nav', 'menu_class' => $menuclass, 'fallback_cb' => 'progo_nav_fallback' ) ); ?>
+			wp_nav_menu( array( 'container' => 'false', 'theme_location' => 'mainmenu', 'menu_id' => 'nav', 'menu_class' => $menuclass, 'fallback_cb' => 'progo_nav_fallback' ) );
+			*/
+			?>
         </div>

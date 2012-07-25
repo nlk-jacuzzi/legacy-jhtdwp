@@ -9,6 +9,50 @@
  * @since JHTDWP 1.0
  */
 ?>
+<div id="ptop">
+<div id="pagetop" class="slides grid_8 Layout1">
+<?php
+global $wp_query, $post;
+$original_query = $wp_query;
+$slides = get_posts('post_type=progo_homeslide&post_status=publish&posts_per_page=-1&orderby=menu_order&order=ASC');
+$count = count($slides);
+$oneon = false;
+foreach ( $slides as $s ) {
+	$on = '';
+	if ( $oneon == false ) {
+		$oneon = true;
+		$on = ' on';
+	}
+	
+	$slidecustom = get_post_meta($s->ID,'_progo_slidecontent');
+	$slidecontent = (array) $slidecustom[0];
+	$bg = ' '. $slidecontent['textcolor'];
+	if ( get_post_thumbnail_id( $s->ID ) ) {
+		$thm = get_the_post_thumbnail($s->ID, 'homeslide');
+		$thmsrc = strpos($thm, 'src="') + 5;
+		$thmsrc = substr($thm, $thmsrc, strpos($thm,'"',$thmsrc+1)-$thmsrc);
+		$bg .= ' custombg " style="background-image: url('. $thmsrc .')';
+	}
+	
+	echo '<div class="textslide slide'. $on . $bg .'"><div class="inside">';
+	if ( $slidecontent['showtitle'] == 'Show' ) echo '<div class="page-title">'. wp_kses($s->post_title,array()) .'</div>';
+	echo '<div class="content productcol">'. apply_filters('the_content',$slidecontent['text']) .'</div></div>'. ($pagetopW==12 ? '<div class="shadow"></div>' : '') .'</div>';
+}
+if ( $oneon == true && $count > 1 ) { ?>
+<div class="ar"><a href="#p" title="Previous Slide"></a><a href="#n" class="n" title="Next Slide"></a></div>
+<script type="text/javascript">
+progo_timing = <?php $hsecs = absint($options['homeseconds']); echo $hsecs > 0 ? $hsecs * 1000 : "0"; ?>;
+</script>
+<?php
+}
+do_action('progo_pagetop');
+if ($pagetopW==8) echo '<div class="shadow"></div>';
+?>
+</div>
+<?php
+	get_sidebar('pbpform');
+?>
+</div>
 <div id="fbar">
 <?php if(!dynamic_sidebar('fbar')) {
 	wp_nav_menu( array( 'container_class' => 'fblock widget_nav_menu', 'theme_location' => 'fbarlnx' ) );

@@ -16,20 +16,11 @@
 if ( ! dynamic_sidebar( 'header' ) ) :
 ?>
 <div class="hblock support">
-    <h3 class="title"><span class="spacer"><?php _e( 'Call Today:', 'progo' ); ?></span></h3>
     <div class="inside">
         <?php
 		$options = get_option('progo_options');
 		
-		if($options['support_email']) {
-			echo '<a href="mailto:'. esc_attr($options['support']) .'">email us</a>';
-		} else {
-			if ( isset( $options['support'] ) ) {
-			echo esc_html($options['support']);
-			} else {
-				echo '(858) 555-1234';
-			}
-		}
+		echo esc_attr($options['businessaddy']) .'<br />'.  esc_attr($options['businessCSZ']);
 		?>
     </div>
 </div>
