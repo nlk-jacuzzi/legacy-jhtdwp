@@ -13,9 +13,9 @@
 
 get_header();
 ?>
-<div id="container" class="container_12">
+<div id="container">
 <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
-<div id="main" class="grid_8">
+<div id="main">
 <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 <div class="entry">
 <?php
@@ -28,7 +28,7 @@ the_content();
 </div><!-- #post-## -->
 </div><!-- #main -->
 <?php endwhile; ?>
-<div class="grid_4 secondary">
+<div class="secondary">
 <?php get_sidebar(); ?>
 </div>
 </div><!-- #container -->
