@@ -153,6 +153,7 @@ input.goldbtn { border: none; background: url(images/btn-gold.png) repeat-x 0 0;
 #main code { font-size: 13px }
 #main dt, #main th { color: #000 }
 #main h1 { font-family: "GSL"; font-weight: normal; font-size: 26px; line-height: 32px; margin: 4px 0 9px }
+#main h1.bigger { font-size: 32px; line-height: 36px; letter-spacing: 0.06em }
 #main h2 { font-size: 22px; font-weight: normal }
 #main h3 { font: 18px/22px "GSMT"; margin: 0 0 13px; text-transform: uppercase; letter-spacing: 0.03em }
 #main h4 { font: 16px/20px "GSMT"; margin: 0 0 13px; letter-spacing: 0.03em }
@@ -223,13 +224,14 @@ img.avatar { float: left; margin: 0 10px 10px 0 }
 .block.fblike { padding: 5px 0 5px 5px; width: 293px }
 .block.fblike h3.title { margin: -5px 0 5px -5px }
 
-.block.calltoday h2 { font-size: 18px; font-family: "GSL"; font-weight: normal; }
+.block.calltoday h2 { font-size: 18px; font-family: "GSL"; font-weight: normal; display: block; padding: 0 0 24px; background: url(images/dwp/callline.png) no-repeat 0 100% }
 .block.calltoday h2 strong { font-weight: normal; font-family: "GSMT" }
 
 ul#mainmenu { margin: 0; float: left; width: 100%; padding: 0; list-style: none; }
 ul#mainmenu ul.sub-menu { display: none }
 ul#mainmenu li { float: left; width: 274px; padding: 3px 7px; background: url(images/dwp/navarr.gif) no-repeat 0 50%; font: 13px/16px "GSMT"; text-transform: uppercase }
 ul#mainmenu a { color: #b87f00 }
+ul#mainmenu .current-menu-item a { color: #000; }
 /* footer */
 #fbar { float: left; width: 920px; padding: 12px 20px; color: #fff; background: #000 url(images/Greyscale/fbar.png) repeat-x 0 0; font-size: 14px; line-height:20px }
 #fbar a { color: #fff }

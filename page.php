@@ -18,12 +18,7 @@ get_header();
 <div id="main">
 <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 <div class="entry">
-<?php
-if ( function_exists('yoast_breadcrumb') ) {
-    yoast_breadcrumb('<p id="breadcrumbs">','</p>');
-}
-the_content();
-?>
+<?php the_content(); ?>
 </div><!-- .entry -->
 </div><!-- #post-## -->
 </div><!-- #main -->
