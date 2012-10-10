@@ -13,6 +13,7 @@
  */
 get_header(); ?>
 <div id="container" class="container_12">
+<?php /*
 <div id="pagetop">
 <h1 class="page-title"><?php
 if ( is_author() ) {
@@ -32,7 +33,7 @@ if ( is_author() ) {
 	echo get_the_title( get_option('progo_blog_id') );
 } ?></h1>
 <?php do_action('progo_pagetop'); ?>
-</div>
+</div> */ ?>
 <div id="main" class="grid_8">
 <?php
 /* Run the loop to output the posts.

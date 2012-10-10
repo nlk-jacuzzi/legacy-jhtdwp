@@ -205,9 +205,10 @@ function progo_admin_menu_cleanup() {
 	// add Theme Options and Homepage Slides pages under APPEARANCE
 	add_theme_page( 'Theme Options', 'Theme Options', 'edit_theme_options', 'progo_admin', 'progo_admin_page' );
 	rsort($submenu['themes.php']);
-	
-	$menu[60][0] = 'ProGo Theme';
+	/*
+	$menu[60][0] = 'Theme';
 	$menu[60][4] = 'menu-top menu-icon-progo';
+	*/
 }
 endif;
 if ( ! function_exists( 'progo_metaboxhidden_defaults' ) ):
@@ -295,7 +296,7 @@ try{convertEntities(wpsc_adminL10n);}catch(e){};
 	?>
 	<div class="wrap">
     <div class="icon32" id="icon-themes"><br /></div>
-    <h2>JHTDWP Theme Options</h2>
+    <h2>JHT DWP Theme Options</h2>
 	<form action="options.php" method="post" enctype="multipart/form-data"><?php
 		settings_fields( 'progo_options' );
 		do_settings_sections( 'progo_api' );
@@ -310,7 +311,7 @@ try{convertEntities(wpsc_adminL10n);}catch(e){};
         <p class="submit"><input type="submit" value="Save Changes" class="button-primary" /></p>
 		<p><br /></p>
 		</form>
-        <h3>Additional ProGo Theme Options</h3>
+        <h3>Additional Theme Options</h3>
         <table class="form-table">
         <?php
 		$addl = array(
@@ -351,7 +352,7 @@ try{convertEntities(wpsc_adminL10n);}catch(e){};
 		<?php if ( function_exists( 'alex_recommends_widget' ) ) {
             alex_recommends_widget();
         } else { ?>
-            <p>The following plugins can help improve various aspects of your WordPress + ProGo Themes site:</p>
+            <p>The following plugins can help improve various aspects of your WordPress + JHT DWP Themes site:</p>
             <ul style="list-style:outside; padding: 0 1em">
             <?php
             $pRec = array();
@@ -534,15 +535,7 @@ function progo_admin_init() {
 	add_settings_field( 'progo_businessemail', 'Business Email', 'progo_field_businessemail', 'progo_dealer', 'progo_dealer' );
 	
 	add_settings_section( 'progo_hours', 'Business Hours', 'progo_section_text', 'progo_hours' );
-	$days = array(
-		'm' => 'Monday',
-		't' => 'Tuesday',
-		'w' => 'Wednesday',
-		'r' => 'Thursday',
-		'f' => 'Friday',
-		's' => 'Saturday',
-		'u' => 'Sunday',
-	);
+	$days = jhtdwp_busdays();
 	foreach ( $days as $k => $v ) {
 		add_settings_field( 'progo_hours_'. $k, $v, 'progo_field_businesshours', 'progo_hours', 'progo_hours', array($k) );
 	}
@@ -1622,7 +1615,7 @@ if (!function_exists('progo_field_businesshours') ):
  */
 function progo_field_businesshours($args) {
 $options = get_option( 'progo_options' );
-print '<input id="progo_hours_'. $args[0] .'" name="progo_options[hours_'. $args[0] .']" class="regular-text" type="text" value="'. esc_html( $options['hours'. $args[0]] ) .'" />';
+print '<input id="progo_hours_'. $args[0] .'" name="progo_options[hours_'. $args[0] .']" class="regular-text" type="text" value="'. esc_html( $options['hours_'. $args[0]] ) .'" />';
 }
 endif;
 if ( ! function_exists( 'progo_field_footercolor' ) ):
@@ -2018,7 +2011,7 @@ function progo_admin_bar_menu() {
 	global $wp_admin_bar;
 	
 	$wp_admin_bar->remove_menu('widgets');
-	$wp_admin_bar->add_menu( array( 'id' => 'progo', 'title' => __('ProGo Theme'), 'href' => admin_url('themes.php?page=progo_admin'), ) );
+	$wp_admin_bar->add_menu( array( 'id' => 'progo', 'title' => __('JHT DWP Theme'), 'href' => admin_url('themes.php?page=progo_admin'), ) );
 	// move Appearance > Widgets & Menus submenus to below our new ones
 	$wp_admin_bar->remove_menu('widgets');
 	$wp_admin_bar->remove_menu('menus');
@@ -2034,3 +2027,50 @@ function progo_nomenu_cb() {
 	return '<ul></ul>';
 }
 endif;
+
+function jhtdwp_busdays() {
+	$days = array(
+		'm' => 'Monday',
+		't' => 'Tuesday',
+		'w' => 'Wednesday',
+		'r' => 'Thursday',
+		'f' => 'Friday',
+		's' => 'Saturday',
+		'u' => 'Sunday'
+		);
+		return $days;
+//	foreach ( $days as $k => $v ) {
+}
+
+function jhtdwp_hr( $atts ) {
+	return '<div class="hr"></div>';
+}
+add_shortcode('hr', 'jhtdwp_hr');
+
+function jhtdwp_callout_warranty( $atts ) {
+	return '<table width="613"><tr><td width="217"><img src="'. get_bloginfo('template_url') .'/images/dwp/10yearwarranty.jpg" alt="10 Year Warranty" width="140" height="136" /></td><td width="396"><h3>Jacuzzi Offers a 10 Year Warranty<br />on all Hot Tubs</h3><p>When shopping for a hot tub, be sure to consider the warranty. Other brands guarantee\'s last 1 or 2 years, but our quality hot tubs feature limited warranties for up to 10 years! In addition, Jacuzzi\'s network of authorized dealers and technicians is standing by to ensure years of worry-free enjoyment. <a href="http://www.jacuzzihottubs.com/warranty-options/" target="_blank">VIEW WARRANTY OPTIONS</a></p></td></tr></table>';
+}
+add_shortcode('dwp-warranty', 'jhtdwp_callout_warranty');
+
+function jhtdwp_callout_broch( $atts ) {
+	return '<table width="613"><tr><td width="217"><img src="'. get_bloginfo('template_url') .'/images/dwp/brochure.jpg" alt="Brochure" width="176" height="194" /></td><td width="396"><h3>Download your <strong>Free Brochure</strong><br /><span style="font-family:\'GSL\'; text-transform: none">See all the new features the Jacuzzi has to offer</h3><a href="http://www.jacuzzihottubs.com/request-brochure/" target="_blank" class="button">FREE DOWNLOAD</a></td></tr></table>';
+}
+add_shortcode('dwp-brochure', 'jhtdwp_callout_broch');
+
+function jhtdwp_callout_contact( $atts ) {
+	$options = get_option( 'progo_options' );
+	$mapaddy = str_replace(' ', '+', $options['businessaddy'] .' '. $options['businessCSZ']);
+	$maplink = 'http://maps.google.com/maps?q='. $mapaddy;
+	$oot = '<table class="contacttable" width="632" height="218"><tr valign="top"><td width="233"><div class="cmap">';
+	$oot .= '<iframe width="206" height="206" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?q='. $mapaddy .'&amp;iwloc=&amp;output=embed"></iframe>';
+	$oot .= '</div></td><td width="212"><h4>ADDRESS</h4><p>'. esc_attr($options['businessaddy']) .'<br />'. esc_attr($options['businessCSZ']) .'<br /><a href="'. esc_url($maplink) .'" target="_blank">VIEW MAP</a><br />'. esc_attr($options['businessphone']) .'<br /><span class="eml">'. esc_attr($options['businessemail']) .'</span></p></td><td width="187"><h4>HOURS</h4><p>';
+	
+	$days = jhtdwp_busdays();
+	foreach ( $days as $k => $v ) {
+		$oot .= '<strong>'. $v .'</strong> '. $options['hours_'. $k] .'<br />';
+	}
+	$oot .= '</p></td></tr></table>';
+	
+	return $oot;
+}
+add_shortcode('dwp-contact', 'jhtdwp_callout_contact');

@@ -53,14 +53,9 @@ if ($pagetopW==8) echo '<div class="shadow"></div>';
 	get_sidebar('pbpform');
 ?>
 </div>
-<div id="fbar">
-<?php if(!dynamic_sidebar('fbar')) {
-	wp_nav_menu( array( 'container_class' => 'fblock widget_nav_menu', 'theme_location' => 'fbarlnx' ) );
-} ?>
-</div>
 	</div><!-- #page -->
 	<div id="ftr" class="container_12">
-    <div class="grid_8<?php
+    <div class="grid_12<?php
 $fmenu = wp_nav_menu( array( 'container' => false, 'theme_location' => 'ftrlnx', 'echo' => 0, 'fallback_cb' => 'progo_nomenu_cb' ) );
 if( strpos( $fmenu, '</li>' ) > 0 ) {
 	$fmenu = str_replace('</li>','&nbsp;&nbsp;|&nbsp;&nbsp;</li>',substr($fmenu,0,strrpos($fmenu,'</li>'))) . "</li>\n</ul>";
@@ -82,9 +77,8 @@ if ( isset( $options['copyright'] ) ) {
 } else {
 	echo '&copy; Copyright '. date('Y') .', All Rights Reserved';
 }
-?>
+?><br />Features and specifications are subject to change. See dealer for details.
 </div>
-<div class="grid_4 right">Powered by <a href="http://www.wordpress.org" target="_blank">WordPress</a>. Designed by <a href="http://www.progo.com/" title="WordPress Themes" target="_blank"><img src="<?php bloginfo('template_url'); ?>/images/logo_admin.png" alt="WordPress Themes by ProGo" /></a></div>
 </div><!-- #ftr -->
 </div><!-- #wrap -->
 </div>

@@ -1,5 +1,5 @@
 // js for front end of ProGo Themes Business Pro sites
-var progo_cycle, progo_timing, progo_sw;
+var progo_cycle, progo_timing, progo_sw = '651px';
 
 function proGoTwitterCallback(twitters) {
   for (var i=0; i<twitters.length; i++){
@@ -84,7 +84,6 @@ function progo_scrollcheck() {
 jQuery(function($) {
 	var progo_ptop = $('#pagetop');
 	if(progo_ptop.hasClass('slides')) {
-		progo_sw = progo_ptop.hasClass('grid_8') ? '646px' : '952px';
 		progo_ptop.children('div.ar').children('a').click(function() { return progo_homecycle($(this)); });
 		progo_ptop.addClass('sliding');
 		$(window).bind('scroll.progo',progo_scrollcheck).trigger('scroll.progo');
@@ -95,5 +94,10 @@ jQuery(function($) {
 		$(this).parent().addClass('hover').children('ul').show();
 	}).parent().bind('mouseleave',function() {
 		$(this).removeClass('hover').children('ul').hide();
+	});
+	
+	$('.eml').each(function() {
+		var addr = $(this).html();
+		$(this).html('<a href="mailto:'+ addr +'">'+ addr +'</a>');
 	});
 });
