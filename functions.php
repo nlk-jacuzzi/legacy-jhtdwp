@@ -526,6 +526,7 @@ function progo_admin_init() {
 	add_settings_field( 'progo_blogname', 'Site Name', 'progo_field_blogname', 'progo_info', 'progo_info' );
 	add_settings_field( 'progo_blogdescription', 'Slogan', 'progo_field_blogdesc', 'progo_info', 'progo_info' );
 	add_settings_field( 'progo_showdesc', 'Show/Hide Slogan', 'progo_field_showdesc', 'progo_info', 'progo_info' );
+	add_settings_field( 'progo_whatblog', 'Show Which Blog Posts', 'progo_field_whatblog', 'progo_info', 'progo_info' );
 	
 	add_settings_section( 'progo_dealer', 'Dealership Information', 'progo_section_text', 'progo_dealer' );
 	//Dealer Location Info for Office Info Widget and Footer display.
@@ -1155,6 +1156,7 @@ function progo_options_defaults() {
 			"blogname" => get_option( 'blogname' ),
 			"blogdescription" => get_option( 'blogdescription' ),
 			"showdesc" => 1,
+			"whatblog" => 0,
 			"copyright" => "© Copyright ". date('Y') .", All Rights Reserved",
 			// OFFICE INFORMATION
 			"businessaddy" => "",
@@ -1283,7 +1285,7 @@ function progo_validate_options( $input ) {
 		$input['frontpage'] = 'fixed';
 	}
 	// opt[showdesc] can only be 1 or 0
-	$bincheck = array( 'showdesc', 'fbtabs', 'ppcposts' );
+	$bincheck = array( 'showdesc', 'whatblog' );
 	foreach( $bincheck as $f ) {
 		if ( (int) $input[$f] != 1 ) {
 			$input[$f] = 0;
@@ -1552,6 +1554,26 @@ Show the Site Slogan next to the Logo at the top of <a target="_blank" href="<?p
 </fieldset>
 <?php }
 endif;
+if ( ! function_exists( 'progo_field_whatblog' ) ):
+/**
+ * outputs HTML for checkbox "Show Which Blog Posts" field on Site Settings page
+ * @since JHTDWP 1.0
+ */
+function progo_field_whatblog() {
+	$options = get_option( 'progo_options' ); ?>
+<select id="progo_whatblog" name="progo_options[whatblog]"><?php
+	for ( $i = 0; $i < 2; $i++ ) {
+		echo '<option value="'. $i .'"';
+		if ( absint( $options['whatblog'] ) == $i ) echo ' selected="selected"';
+		echo '>';
+		echo ( $i == 0 ? 'Show Official Jacuzzi Hot Tubs Blog Posts' : 'Use Your Own Blog Posts' );
+		echo '</option>';
+	}
+	if ( (int) $options['showdesc'] == 1 ) {
+		echo ' checked="checked"';
+	} ?> />
+<?php }
+endif;
 if ( ! function_exists( 'progo_field_copyright' ) ):
 /**
  * outputs HTML for "Copyright Notice" field on Site Settings page
@@ -1702,18 +1724,11 @@ function progo_menufilter($items, $args) {
 	$blogID = get_option('progo_blog_id');
 	foreach ( $items as $i ) {
 		if ( $i->object_id == $blogID ) {
-			$i->classes[] = 'blog';
-		}
-	}
-	// want our MAINMENU to have MAX of 7 items
-	if ( $args->theme_location == 'mainmenu' ) {
-		$toplinks = 0;
-		foreach ( $items as $k => $v ) {
-			if ( $v->menu_item_parent == 0 ) {
-				$toplinks++;
-			}
-			if ( $toplinks > 7 ) {
-				unset($items[$k]);
+			$options = get_option('progo_options');
+			if ( absint($options['whatblog']) == 0 ) {
+				$i->classes[] = 'hidden';
+			} else {
+				$i->classes[] = 'blog';
 			}
 		}
 	}

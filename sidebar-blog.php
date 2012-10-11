@@ -12,7 +12,10 @@
  * then the sidebar simply doesn't exist, so we'll hard-code in
  * some default sidebar stuff just in case.
  */
+get_sidebar('standard');
+ 
 if ( ! dynamic_sidebar( 'blog' ) ) :
+/*
 ?>
 <div class="block widget_archive">
     <h3 class="title"><span class="spacer"><?php _e( 'Archives', 'progo' ); ?></span></h3>
@@ -22,4 +25,6 @@ if ( ! dynamic_sidebar( 'blog' ) ) :
     </ul>
     </div>
 </div>
-<?php endif; // end primary widget area ?>
+<?php
+*/
+endif; // end primary widget area ?>

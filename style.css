@@ -209,8 +209,7 @@ img.avatar { float: left; margin: 0 10px 10px 0 }
 
 .secondary { float: right; margin: 16px 9px 0 0; width: 288px }
 .block { float: left; width: 100%; border: none; margin: 0 0 9px; padding: 0; font-size:12px; line-height:18px; position: relative }
-.block h3.title { float: left; width: 298px; padding: 8px 0; margin: -11px -18px 11px; font: 19px/23px Arial, Helvetica, sans-serif; color: #3c3c3c; background: url(images/h3b.gif) repeat-x 0 100% }
-.block h3.title .spacer { float: left; margin: 0 18px }
+.block h3.title { float: left; width: 100%; font: 14px/21px "GSMT", sans-serif; padding: 14px 0 18px; background: url(images/dwp/blogtitle.png) no-repeat 0 0; text-transform: uppercase }
 .block ul { margin: 0; padding: 0; list-style: none }
 .block ul li { margin-bottom: 3px }
 .block.test .lq { position: absolute; top: 20px; left: 19px }
@@ -227,11 +226,17 @@ img.avatar { float: left; margin: 0 10px 10px 0 }
 .block.calltoday h2 { font-size: 18px; font-family: "GSL"; font-weight: normal; display: block; padding: 0 0 24px; background: url(images/dwp/callline.png) no-repeat 0 100% }
 .block.calltoday h2 strong { font-weight: normal; font-family: "GSMT" }
 
-ul#mainmenu { margin: 0; float: left; width: 100%; padding: 0; list-style: none; }
+.block p.blogpost { display: block; padding: 2px 7px 13px; border-bottom: 1px solid #ccc; margin: 0 0 10px }
+.block p.blogpost a em { display: block; font-size: 13px; font-weight: bold; line-height: 20px; color: #333; margin: 0 0 4px }
+.block p.blogpost a .rm { text-transform: uppercase; color: #b98100; text-decoration: underline; font-size: 11px }
+
+
+ul#mainmenu { margin: 0 0 6px; float: left; width: 100%; padding: 0; list-style: none; }
 ul#mainmenu ul.sub-menu { display: none }
-ul#mainmenu li { float: left; width: 274px; padding: 3px 7px; background: url(images/dwp/navarr.gif) no-repeat 0 50%; font: 13px/16px "GSMT"; text-transform: uppercase }
+ul#mainmenu li { float: left; width: 268px; padding: 3px 10px; background: url(images/dwp/navarr.gif) no-repeat 0 50%; font: 13px/16px "GSMT"; text-transform: uppercase }
 ul#mainmenu a { color: #b87f00 }
 ul#mainmenu .current-menu-item a { color: #000; }
+ul#mainmenu li.hidden { display: none }
 /* footer */
 #fbar { float: left; width: 920px; padding: 12px 20px; color: #fff; background: #000 url(images/Greyscale/fbar.png) repeat-x 0 0; font-size: 14px; line-height:20px }
 #fbar a { color: #fff }
@@ -266,6 +271,9 @@ a.button, input.button, #main a.button { display: block; width: 264px; height: 2
 a.button:hover, input.button:hover { text-decoration: none; cursor: pointer }
 
 div.hr { display: block; width: 100%; height: 10px; margin: 20px 0 10px; border-top: 1px solid #ccc }
+
+#coll { float: left; width: 245px; }
+#colr { float: left; width: 345px; padding-left: 34px; border-left: 1px solid #ccc; margin-left: 10px }
 
 /* other */
 .asterix { color:red }
