@@ -573,18 +573,15 @@ function progo_admin_init() {
 		}
 		
 		// create a few new pages, and populate some menus
-		$lipsum = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam...Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna\n\nLorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam...Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam";
 		
 		$new_pages = array(
 			'home' => array(
 				'title' => __( 'Home', 'jhtdwp' ),
-				'content' => "<h3>This is your Homepage</h3>$lipsum",
 				'id' => '',
 				'menus' => array( 'ftrlnx' ),
 			),
 			'about' => array(
 				'title' => __( 'About Us', 'jhtdwp' ),
-				'content' => "<h3>This Page could have info about your store</h3>$lipsum",
 				'id' => '',
 				'menus' => array( 'mainmenu', 'ftrlnx' ),
 			),
@@ -596,68 +593,63 @@ function progo_admin_init() {
 			),
 			'collections' => array(
 				'title' => __( 'The Collections', 'jhtdwp' ),
-				'content' => "<h3>Jacuzzi Hot Tubs Overview</h3>$lipsum",
 				'id' => '',
 				'menus' => array( 'mainmenu', 'ftrlnx' ),
 			),
+			/*
 			'j-lx' => array(
 				'title' => __( 'The New J-LX Collection', 'jhtdwp' ),
-				'content' => "<h3>The New<br /><strong>J-LX</strong> Collection</h3>$lipsum",
 				'id' => '',
 				'menus' => array( 'mainmenu' ),
 			),
 			'j-400' => array(
 				'title' => __( 'The J-400 Collection', 'jhtdwp' ),
-				'content' => "<h3><strong>J-400</strong> Collection</h3>$lipsum",
 				'id' => '',
 				'menus' => array( 'mainmenu' ),
 			),
 			'j-300' => array(
-				'title' => __( 'The 3-400 Collection', 'jhtdwp' ),
-				'content' => "<h3><strong>J-300</strong> Collection</h3>$lipsum",
+				'title' => __( 'The J-300 Collection', 'jhtdwp' ),
 				'id' => '',
 				'menus' => array( 'mainmenu' ),
 			),
 			'j-200' => array(
 				'title' => __( 'The J-200 Collection', 'jhtdwp' ),
-				'content' => "<h3><strong>J-200</strong> Collection</h3>$lipsum",
 				'id' => '',
 				'menus' => array( 'mainmenu' ),
 			),
+			*/
 			'difference' => array(
 				'title' => __( 'The Jacuzzi Difference', 'jhtdwp' ),
-				'content' => "<h3>The Jacuzzi Difference</h3>$lipsum",
 				'id' => '',
 				'menus' => array( 'mainmenu', 'ftrlnx' ),
 			),
 			'hydrotherapy' => array(
 				'title' => __( 'Advanced Hydrotherapy', 'jhtdwp' ),
-				'content' => "<h3>Advanced Hydrotherapy</h3>$lipsum",
 				'id' => '',
 				'menus' => array( 'mainmenu', 'ftrlnx' ),
 			),
 			'accessories' => array(
 				'title' => __( 'Accessories', 'jhtdwp' ),
-				'content' => "<h3>Accessories Page...</h3>$lipsum",
 				'id' => '',
 				'menus' => array( 'mainmenu', 'ftrlnx' ),
 			),
 			'contact' => array(
 				'title' => __( 'Contact Us', 'jhtdwp' ),
-				'content' => "<h3>Contact Us</h3>$lipsum",
 				'id' => '',
 				'menus' => array( 'mainmenu', 'ftrlnx' ),
 			),
 		);
 		$menu_parent_id = 0;
 		foreach ( $new_pages as $slug => $page ) {
+			$pcontent = jhtdwp_default_page_content( $slug );
+			
 			$new_pages[$slug]['id'] = wp_insert_post( array(
 				'post_title' 	=>	$page['title'],
 				'post_type' 	=>	'page',
 				'post_name'		=>	$slug,
 				'comment_status'=>	'closed',
 				'ping_status' 	=>	'closed',
-				'post_content' 	=>	$page['content'],
+				'post_content' 	=>	$pcontent,
 				'post_status' 	=>	'publish',
 				'post_author' 	=>	1,
 				'menu_order'	=>	1
@@ -698,6 +690,9 @@ function progo_admin_init() {
 				}
 			}
 		}
+		// also set option so homepage shows PAGE not POSTS
+		update_option( 'show_on_front', 'page' );
+		
 		// and lets also add our first HOMEPAGE SLIDE ?
 		$slide1 = wp_insert_post( array(
 			'post_title' 	=>	'Slide 1',
@@ -766,19 +761,20 @@ if ( ! function_exists( 'progo_jhtdwp_widgets' ) ):
  * @since JHTDWP 1.0
  */
 function progo_jhtdwp_widgets() {
+	
 	register_sidebar(array(
-		'name' => 'Standard Pages',
-		'id' => 'main',
-		'description' => 'Standard right column sidebar area',
+		'name' => 'Blog',
+		'id' => 'blog',
+		'description' => 'Sidebar for the Blog area',
 		'before_widget' => '<div class="block %1$s %2$s">',
 		'after_widget' => '</div>',
 		'before_title' => '<h3 class="title"><span class="spacer">',
 		'after_title' => '</span></h3>'
 	));
 	register_sidebar(array(
-		'name' => 'Blog',
-		'id' => 'blog',
-		'description' => 'Sidebar for the Blog area',
+		'name' => 'Standard Pages',
+		'id' => 'main',
+		'description' => 'Standard right column sidebar area',
 		'before_widget' => '<div class="block %1$s %2$s">',
 		'after_widget' => '</div>',
 		'before_title' => '<h3 class="title"><span class="spacer">',
@@ -1015,12 +1011,15 @@ function progo_firstform(){
 			));
 	$rq = '<span title="Required">*</span>';
 	$n = "\n";
-	$form = '<table class="dform" width="274">'. $n .'<tr><td colspan="3"><label for="name">Your Name'. $rq .'</label>[text* name id:name class:text akismet:author]</td></tr>' . $n
+	$form = '<h3>REQUEST AN APPOINTMENT</h3>'. $n .'<table class="dform" width="274">'. $n
+		.'<tr><td colspan="3"><label for="name">Your Name'. $rq .'</label>[text* name id:name class:text akismet:author]</td></tr>' . $n
 		.'<tr><td colspan="3"><label for="email">Email'. $rq .'</label>[email* email id:email class:text akismet:author_email]</td></tr>'. $n
-		.'<tr><td width="132"><label for="phone">Phone'. $rq .'</label>[text* phone id:phone class:text]</td>'. $n .'<td width="12">&nbsp;</td>'. $n .'<td width="130"><label for="zip">Zip'. $rq .'</label>[text* zip id:zip class:text]</td></tr>'. $n
-		.'<tr><td colspan="3"><label for="comments">Comments/Questions</label>[textarea comments x3]</td></tr>'. $n
-		.'<tr><td colspan="3"><em class="rq">* Indicates required fields.</em>'. $n .'[submit class:submit "SUBMIT REQUEST"]'. $n
-		.'<span class="disc">We will never sell, share, or rent your personal information to anyone.</td></tr>'. $n .'</table>';
+		.'<tr class="two"><td width="132"><label for="phone">Phone'. $rq .'</label>[text* phone id:phone class:text]</td>'. $n .'<td width="12">&nbsp;</td>'. $n
+		.'<td width="130"><label for="zip">Zip'. $rq .'</label>[text* zip id:zip class:text]</td></tr>'. $n
+		.'<tr><td colspan="3"><label for="comments">Comments/Questions</label>[textarea comments x2]</td></tr>'. $n
+		.'<tr><td colspan="3"><em class="rq">* Indicates required fields.</em>[submit class:goldbtn "SUBMIT REQUEST"]'
+		.'<span class="disc">We will never sell, share, or rent your personal information to anyone.</td></tr>'. $n
+		.'</table>';
 	
 	$subject = get_option( 'blogname' ) .' : Contact Form';
 	$sender = '[name] <[email]>';
@@ -1876,7 +1875,7 @@ function progo_admin_notices() {
 				break;
 			case 6: // CREATE CF7 Form1
 				$pct = 65;
-				$nst = 'CF7 is Installed &amp; Activated! <a href="'. wp_nonce_url("admin.php?progo_admin_action=firstform", 'progo_firstform') .'">Click Here to set up the first Form for your Homepage</a>.';
+				$nst = 'CF7 is Installed &amp; Activated! <a href="'. wp_nonce_url("admin.php?progo_admin_action=firstform", 'progo_firstform') .'">Click Here to set up the main Form for your site</a>.';
 				break;
 			case 7: // Customize further
 				$pct = 75;
@@ -1884,7 +1883,7 @@ function progo_admin_notices() {
 				break;
 			case 8: // Permalinks
 				$pct = 80;
-				$nst = 'Your <em>Permalinks</em> settings are still set to the Default option. <a href="'. wp_nonce_url("admin.php?progo_admin_action=permalink_recommended", 'progo_permalink_check') .'">Use the ProGo-Recommended "Day and name" setting</a>, <a href="'. admin_url("options-permalink.php") .'">Choose another non-Default option for yourself</a>, or <a href="'. wp_nonce_url("admin.php?progo_admin_action=permalink_default", 'progo_permalink_check') .'">keep the Default setting and move to the next step</a>.';
+				$nst = 'Your <em>Permalinks</em> settings are still set to the Default option. <a href="'. wp_nonce_url("admin.php?progo_admin_action=permalink_recommended", 'progo_permalink_check') .'">Use the Recommended "Day and name" setting</a>, <a href="'. admin_url("options-permalink.php") .'">Choose another non-Default option for yourself</a>, or <a href="'. wp_nonce_url("admin.php?progo_admin_action=permalink_default", 'progo_permalink_check') .'">keep the Default setting and move to the next step</a>.';
 				break;
 			case 9: // Business Info?
 				$pct = 90;
@@ -2089,3 +2088,40 @@ function jhtdwp_callout_contact( $atts ) {
 	return $oot;
 }
 add_shortcode('dwp-contact', 'jhtdwp_callout_contact');
+
+function jhtdwp_default_page_content( $slug ) {
+	$oot = '';
+	$n = "\n";
+	$n2 = "\n\n";
+	$bbase = trailingslashit( get_bloginfo('url') );
+	$ibase = get_bloginfo('template_url') .'/images/dwp/';
+	$dname = get_bloginfo('name');
+	switch ( $slug ) {
+		case 'home':
+			$oot = '<h1>This is where you put your headline</h1>'. $n .'
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla.'. $n2
+.'<table class="col3">'. $n .'<tr valign="top">'. $n .'<td width="199"><a href="'. $bbase .'about/"><img src="'. $ibase .'dealer.gif" alt="Dealer" width="199" height="152" /></a><h5>ABOUT US</h5>'. $n2 .'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper'. $n2 .'</td>'. $n .'<td width="18">&nbsp;</td>'. $n .'<td width="199"><a href="'. $bbase .'collections/"><img src="'. $ibase .'collections.jpg" alt="The Collections" width="199" height="152" /></a><h5>THE COLLECTIONS</h5>'. $n2 .'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper '. $n2 .'</td>'. $n .'<td width="18">&nbsp;</td>'. $n .'<td width="199"><a href="'. $bbase .'difference/"><img src="'. $ibase .'difference.jpg" alt="The Jacuzzi Difference" width="199" height="152" /></a><h5>THE JACUZZI DIFFERENCE</h5>'. $n2 .'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper '. $n2 .'</td>'. $n .'</tr>'. $n .'</table>'. $n2 .'[hr]'. $n2 .'[dwp-warranty]'. $n2 .'[hr]'. $n2 .'[dwp-brochure]';
+			break;
+		case 'about':
+			$oot = '<h1>Why '. $dname .' and a Jacuzzi Hot Tub?</h1>'. $n .'There are a lot of different reasons to visit us and see the Jacuzzi difference.  I assume by now you have done a little research, and by now you have probably generated some questions.  How many places have you contacted and were unable to give clear, concise answers to your questions?  How many people did you talk to who didn’t even answer your questions and just beat around the bush?  Its frustrating.  We know it is.  This is a big purchase and you should be properly informed.  '. $n2 .'That is why when you call us, we will have the answers you are looking for.  There is no replacement for experience in all areas of hot tub ownership.  It doesn’t matter if you are looking for service related information or reasons to buy a new hot tub.  We want to help.'. $n2 .'We are happy to give you the hands on experience today’s consumer desires.  This means clean, current model hot tubs full of water and ready for you to try out.  This means the proper parts and supplies you demand to keep your Jacuzzi running at it’s best.  And this also means having someone willing to put in the time to show you how to use that brand new Jacuzzi you just put in your backyard.'. $n .'<h4>Quality, commitment, and value how you want it, when you want it.'. $n .'So bring your bathing suits, towels, and smiles and come see us at:</h4>'. $n .'[dwp-contact]'. $n2 .'[dwp-warranty]'. $n2 .'[hr]'. $n2 .'[dwp-brochure]';
+			break;
+		case 'blog':
+			$oot = 'This Page pulls in your Blog posts';
+			break;
+		
+		case 'collections':
+			$oot = '<h1>JACUZZI HOT TUBS OVERVIEW</h1>'. $n .'<strong>Jacuzzi® hot tubs, water that moves you!</strong> When you are looking for all the comforts of home, make sure that one of those comforts is a quality Jacuzzi hot tub. Relax and enjoy your own private hydrotherapy session. Rejuvenate sore muscles and joints after a long day of work or play. Spend some family time together. Beat the chill of a cold day by soaking in your own hot tub. With so many models to choose from, there’s a relaxing Jacuzzi hot tub to fit any home. And any budget. Jacuzzi produces a full line of affordable hot tubs that will fit your lifestyle and your budget. We categorized our vast selection of hot tubs and spas into four collections:'. $n2 .'The Jacuzzi J-LX Collection'. $n .'The Jacuzzi J-400 Designer Collection'. $n .'The Jacuzzi J-300 Signature Collection'. $n .'The Jacuzzi J-200 Classic Collection'. $n2 .'Why not come in today to wet test a Jacuzzi Hot Tub and find out what you’re missing!';
+			break;
+		case 'difference':
+		case 'hydrotherapy':
+			$oot = '... Page content supplied by theme template file ...';
+			break;
+		case 'accessories':
+			$oot = '<h1>Hot Tubs, Accessories and Spa Living</h1>'. $n .'<img src="'. $ibase .'accessories.jpg" alt="Hot Tubs, Accessories and Spa Living" width="300" height="239" class="alignright" />Jacuzzi livens up the entertaining possibilities and puts practical matters in place to enrich your enjoyment of your hot tub. From remote controls for the stereo system option to non-slip steps that match our hot tubs, accessories fit in exactly where you want them.'. $n2 .'The most practical items among the Jacuzzi® hot tub accessories selections are spa steps, including the Handi-Step™ and the Jacuzzi ProLite™ step, each made of durable plastic for years of use. The variety of colors coordinate with the cabinet colors of the hot tubs. Accessories that can add fun and function to your spa include tables that fit next to your hot tub and stools. The stools can be used with a table or as a stand-alone convenience.'. $n2 .'Matching planters are ideal for adding a touch of green or surrounding the spa with a tall screen of green. Each planter measures one cubic foot, making them handy for storage, too.'. $n2 .'If you were to ask hot tub owners what is the most important accessory to complement your spa, the cover lift would be among the most popular. Designed to mount on the side of almost any spa and raise or lower your cover, a cover lift makes it quick, easy and convenient to use your hot tub.'. $n2 .'There’s also a soft side to extras for Jacuzzi hot tubs. Accessories such as Jacuzzi towels and the Jacuzzi kimono robe will wrap you in soft comfort when entering or leaving your spa. The Jacuzzi Exclusives collection of accessories includes covers, lifts, filters, cleaners, and more. Discover how your hot tub’s accessories can pull together a complete at-home spa lifestyle by visiting your Jacuzzi dealer.'. $n .'<h3>More Jacuzzi accessories</h3>'. $n .'<table width="640"><tr><td width="162"><p><a href="http://www.jacuzzihottubs.com/accessories/covers-lifts/" target="_blank"><img src="'. $ibase .'acc-covers.jpg" alt="Covers & Lifts" width="152" height="124" /></a></p><h5><a href="http://www.jacuzzihottubs.com/accessories/covers-lifts/" target="_blank">Covers & Lifts</a></h5></td><td width="162"><a href="http://www.jacuzzihottubs.com/accessories/synthetic-accessories/" target="_blank"><img src="'. $ibase .'acc-synthetic.jpg" alt="Synthetic Accessories" width="152" height="124" /></a></p><h5><a href="http://www.jacuzzihottubs.com/accessories/synthetic-accessories/" target="_blank">Synthetic Accessories</a></h5></td><td width="162"><a href="http://www.jacuzzihottubs.com/accessories/complements/" target="_blank"><img src="'. $ibase .'acc-complements.jpg" alt="Hot Tub Complements" width="152" height="124" /></a></p><h5><a href="http://www.jacuzzihottubs.com/accessories/complements/" target="_blank">Hot Tub Complements</a></h5></td><td width="162"><a href="http://www.jacuzzihottubs.com/accessories/water-purification-systems/" target="_blank"><img src="'. $ibase .'acc-purification.jpg" alt="Water Purification" width="152" height="124" /></a></p><h5><a href="http://www.jacuzzihottubs.com/accessories/water-purification-systems/" target="_blank">Water Purification</a></h5></td></tr></table>';
+			break;
+		case 'contact':
+			$oot = '<h1>Contact Us Today!</h1>'. $n .'<h4>Quality, commitment, and value how you want it, when you want it.'. $n .'So bring your bathing suits, towels, and smiles and come see us at:</h4>'. $n .'[dwp-contact]'. $n2 .'[dwp-warranty]'. $n2 .'[hr]'. $n2 .'[dwp-brochure]';
+			break;
+	}
+	return $oot;
+}
