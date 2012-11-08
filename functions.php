@@ -396,10 +396,9 @@ function progo_custom_login_logo() {
 	if ( get_option('progo_logo') != '' ) {
 		#needswork
 		echo "<!-- login screen here... overwrite logo with custom logo -->\n"; 
-	} else { ?>
+	}else { ?>
 <style type="text/css">
-#login { margin-top: 6em; }
-h1 a { background: url(<?php bloginfo( 'template_url' ); ?>/images/logo_progo.png) no-repeat top center; height: 80px; }
+.login h1 a { background: url(<?php bloginfo( 'template_url' ); ?>/images/logo_progo.png) no-repeat top center; height: 80px; }
 </style>
 <?php }
 }
@@ -412,10 +411,7 @@ if ( ! function_exists( 'progo_custom_login_url' ) ):
  * @since JHTDWP 1.0
  */
 function progo_custom_login_url() {
-	if ( get_option( 'progo_logo' ) != '' ) {
-		return get_bloginfo( 'url' );
-	} // else
-	return 'http://www.progo.com';
+	return get_bloginfo( 'url' );
 }
 endif;
 if ( ! function_exists( 'progo_admin_page_styles' ) ):
