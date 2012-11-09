@@ -357,10 +357,10 @@ try{convertEntities(wpsc_adminL10n);}catch(e){};
             <?php
             $pRec = array();
             $pRec[] = array('name'=>'WordPress SEO by Yoast','stub'=>'wordpress-seo','desc'=>'Out-of-the-box SEO. Easily control your keywords, meta descriptions, and more');
-            $pRec[] = array('name'=>'ShareThis','stub'=>'share-this','desc'=>'Get more exposure for your site as visitors share it with their friends');
             $pRec[] = array('name'=>'Google Analytics for WordPress','stub'=>'google-analytics-for-wordpress','desc'=>'Add Google Analytics to your site, with options to track external links, mailto\'s, and downloads');
+            $pRec[] = array('name'=>'Google Tag Manager','stub'=>'google-tag-manager','desc'=>'Makes it even easier to use Google Tag Manager, adding all the code itself');
+            $pRec[] = array('name'=>'ShareThis','stub'=>'share-this','desc'=>'Get more exposure for your site as visitors share it with their friends');
             $pRec[] = array('name'=>'NextGEN Gallery','stub'=>'nextgen-gallery','desc'=>'A fully integrated Image Gallery plugin with dozens of options and features');
-            $pRec[] = array('name'=>'Contact Form 7 to Database Extension','stub'=>'contact-form-7-to-database-extension','desc'=>'Saves submitted form data from Contact Form 7 to your database, for future reference');
             $pRec[] = array('name'=>'Duplicate Post','stub'=>'duplicate-post','desc'=>'Add functionality to Save Page As...');
             $pRec[] = array('name'=>'WB DB Backup','stub'=>'wp-db-backup','desc'=>'On-demand backup of your WordPress database');
             
