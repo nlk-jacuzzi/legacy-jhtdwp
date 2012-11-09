@@ -111,7 +111,7 @@ a#logo { width: 159px; text-indent: -999em; background: url(images/dwp/jacuzzi.p
 .sliding .slide.on { left: 0 }
 #pagetop a { color: #fff }
 #pagetop .Dark, #pagetop .Dark a { color: #333 }
-.slide .content { margin: 0 38px 65px 40px; font-size: 14px; line-height: 22px; float: left; width: 573px; position: absolute; left: 0; bottom: 0; }
+.slide .content { margin: 0; padding: 0 38px 65px 40px; font-size: 14px; line-height: 22px; float: left; width: 573px; position: absolute; left: 0; bottom: 0; }
 .slide .content h2 { font: 28px/35px "GSMT"; letter-spacing: 0.02em; text-shadow: 2px 2px 3px rgba(0,0,0,0.74) }
 #pagetop .shadow { display: block; width: 9px; height: 100%; position: absolute; top: 0; left: 637px; z-index: 3; background: url(images/pshadow.png) repeat-y 0 0 }
 #pagetop .slide .shadow { left: 638px }
@@ -124,6 +124,8 @@ a#logo { width: 159px; text-indent: -999em; background: url(images/dwp/jacuzzi.p
 .Layout4 .inside { float: right; width: 305px }
 #pagetop.sliding.Layout4 .page-title { margin: 29px 18px 15px; width: 269px; line-height:42px; font-weight: normal }
 .Layout4 .slide .content { margin: 0 18px 31px; font-size: 18px }
+
+.slide a.fulllink { display: block; width: 651px; height: 487px; background: url(images/fx.gif) repeat 0 0; position: absolute; bottom: 0; left: 0; text-indent: -999em }
 
 .pbpform { float: right; width: 310px; height: 519px; background: url(images/rightcol.png) no-repeat 0 0; margin: 0 }
 .secondary .pbpform { margin: -6px 0 9px; position: relative; width: 298px; height: auto; border: 1px solid #ccc; background: #eee url(images/Greyscale/hform2.png) no-repeat 0 0  }
