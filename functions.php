@@ -770,19 +770,18 @@ function progo_jhtdwp_widgets() {
 	register_sidebar(array(
 		'name' => 'Standard Pages',
 		'id' => 'main',
-		'description' => 'Standard right column sidebar area',
+		'description' => 'Widget area in the sidebar of all pages, in between main nav &amp; Blog section',
 		'before_widget' => '<div class="block %1$s %2$s">',
 		'after_widget' => '</div>',
 		'before_title' => '<h3 class="title"><span class="spacer">',
 		'after_title' => '</span></h3>'
 	));
-	/*
-	$progo_widgets = array( 'FBLikeBox', 'Tweets', 'Share', 'Social', 'Support', 'PBPForm', 'OfficeInfo' );
+	
+	$progo_widgets = array( 'FBLikeBox', 'Tweets', 'Share', 'Social' );
 	foreach ( $progo_widgets as $w ) {
 		require_once( 'widgets/widget-'. strtolower($w) .'.php' );
 		register_widget( 'ProGo_Widget_'. $w );
 	}
-	*/
 }
 endif;
 if ( ! function_exists( 'progo_metabox_cleanup' ) ):

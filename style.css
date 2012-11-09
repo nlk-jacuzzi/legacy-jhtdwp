@@ -277,6 +277,16 @@ div.hr { display: block; width: 100%; height: 10px; margin: 20px 0 10px; border-
 #coll { float: left; width: 245px; }
 #colr { float: left; width: 345px; padding-left: 34px; border-left: 1px solid #ccc; margin-left: 10px }
 
+.social ul li { float: left; margin: 0; padding: 0 }
+.social a { float: left; margin: 0 5px 0 0; padding: 0; width: 30px; height: 30px; text-indent: -999em; background: url(images/social.png) no-repeat 0 0 }
+.social .tw a { background-position: -30px 0 }
+.social .gp a { background-position: -60px 0 }
+.social .pn a { background-position: -90px 0 }
+.social .in a { background-position: -120px 0 }
+.social .yt a { background-position: -150px 0 }
+.social .vm a { background-position: -180px 0 }
+.social .rss a { background-position: -210px 0 }
+
 /* other */
 .asterix { color:red }
 *:focus { outline: none }
