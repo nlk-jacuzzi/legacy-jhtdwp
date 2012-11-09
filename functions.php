@@ -864,7 +864,7 @@ function progo_slidecontent_box() {
     <div class="slidecontent" id="slidetypeTextContent">
     	<p><em>Title (above) will be used as the main text Headline for this Slide</em></p>
         <p><strong>Additional Copy (optional)</strong><br />
-        <textarea name="progo_slidecontent[text]" rows="6" style="width: 100%"><?php echo esc_attr($slidetext); ?></textarea><br /><em>Line Breaks in the text above will be converted to "&lt;br /&gt;" on display</em></p>
+        <textarea name="progo_slidecontent[text]" rows="6" style="width: 100%"><?php echo esc_attr($slidetext); ?></textarea><br /><em>Line Breaks in the text above will be converted to "&lt;br /&gt;" on display.<br />In order to have a link around the entire slide image, use the code: &lt;a href="[your-url-here]" class="fulllink"&gt;Learn More&lt;/a&gt;</em></p>
     </div>
     <table id="slideTextColor"><tr><th scope="row" width="141" align="left">Slide Text Color :</th><?php
 	
