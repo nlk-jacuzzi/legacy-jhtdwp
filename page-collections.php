@@ -25,7 +25,7 @@ get_header();
 &middot; Exclusive Jacuzzi Design<br />
 &middot; New ProStep&trade;:<br />easy entry + storage<br />
 &middot; Upgraded filtration system<br /><br />
-<a href="http://www.jacuzzihottubs.com/j-lx/" target="_blank">J-LX COLLECTION</a></p>
+<a href="<?php bloginfo('url'); ?>/j-lx/">J-LX COLLECTION</a></p>
 <div class="hr"></div>
 <h2><strong>J-400</strong> Collection</h2>
 <h4>Breaks the mold in hot tub design</h4>
@@ -33,7 +33,7 @@ get_header();
 &middot; Exclusive Jacuzzi Design<br />
 &middot; New ProStep&trade;:<br />easy entry + storage<br />
 &middot; Upgraded filtration system<br /><br />
-<a href="http://www.jacuzzihottubs.com/j-400/" target="_blank">J-400 COLLECTION</a></p>
+<a href="<?php bloginfo('url'); ?>/j-400/">J-400 COLLECTION</a></p>
 <div class="hr"></div>
 <h2><strong>J-300</strong> Collection</h2>
 <h4>The Jets that started an industry.</h4>
@@ -42,7 +42,7 @@ get_header();
 &middot; Rainbow Waterfall<br />
 &middot; Lighted beverage coasters<br />
 &middot; ProLites LED lighting<br /><br />
-<a href="http://www.jacuzzihottubs.com/j-300/" target="_blank">J-300 COLLECTION</a></p>
+<a href="<?php bloginfo('url'); ?>/j-300/">J-300 COLLECTION</a></p>
 <div class="hr"></div>
 <h2><strong>J-200</strong> Collection</h2>
 <h4>Classic Designs from the first name in hot tubs.</h4>
@@ -51,7 +51,7 @@ get_header();
 &middot; Pillow headrests<br />
 &middot; Full lounge seat<br />
 &middot; Whirlpool jets<br /><br />
-<a href="http://www.jacuzzihottubs.com/j-200/" target="_blank">J-200 COLLECTION</a></p>
+<a href="<?php bloginfo('url'); ?>/j-200/">J-200 COLLECTION</a></p>
 </div>
 </div><!-- #main -->
 <?php endwhile; ?>

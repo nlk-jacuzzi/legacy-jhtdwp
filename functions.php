@@ -592,7 +592,6 @@ function progo_admin_init() {
 				'id' => '',
 				'menus' => array( 'mainmenu', 'ftrlnx' ),
 			),
-			/*
 			'j-lx' => array(
 				'title' => __( 'The New J-LX Collection', 'jhtdwp' ),
 				'id' => '',
@@ -613,7 +612,6 @@ function progo_admin_init() {
 				'id' => '',
 				'menus' => array( 'mainmenu' ),
 			),
-			*/
 			'difference' => array(
 				'title' => __( 'The Jacuzzi Difference', 'jhtdwp' ),
 				'id' => '',
@@ -635,8 +633,8 @@ function progo_admin_init() {
 				'menus' => array( 'mainmenu', 'ftrlnx' ),
 			),
 		);
-		$menu_parent_id = 0;
 		foreach ( $new_pages as $slug => $page ) {
+			$menu_parent_id = 0;
 			$pcontent = jhtdwp_default_page_content( $slug );
 			
 			$new_pages[$slug]['id'] = wp_insert_post( array(
@@ -663,10 +661,10 @@ function progo_admin_init() {
 						update_option( 'progo_blog_id', $new_pages[$slug]['id'] );
 						break;
 					case 'j-lx':
-						$menu_parent_id = $new_pages['collections']['id'];
-						break;
-					case 'hydrotherapy':
-						$menu_parent_id = 0;
+					case 'j-400':
+					case 'j-300':
+					case 'j-200':
+						$menu_parent_id = $new_pages['collections']['mainmenu_id'];
 						break;
 				}
 				
@@ -681,7 +679,8 @@ function progo_admin_init() {
 				foreach ( $new_pages[$slug]['menus'] as $menu_key ) {
 					$menu_id = $new_menus[$menu_key];
 					if ( is_numeric( $menu_id ) ) {
-						wp_update_nav_menu_item( $menu_id , 0, $menu_args );
+						$menu_item_id = wp_update_nav_menu_item( $menu_id , 0, $menu_args );
+						$new_pages[$slug][$menu_key .'_id'] = $menu_item_id;
 					}
 				}
 			}
@@ -2103,9 +2102,16 @@ Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh 
 		case 'blog':
 			$oot = 'This Page pulls in your Blog posts';
 			break;
-		
 		case 'collections':
-			$oot = '<h1>JACUZZI HOT TUBS OVERVIEW</h1>'. $n .'<strong>Jacuzzi® hot tubs, water that moves you!</strong> When you are looking for all the comforts of home, make sure that one of those comforts is a quality Jacuzzi hot tub. Relax and enjoy your own private hydrotherapy session. Rejuvenate sore muscles and joints after a long day of work or play. Spend some family time together. Beat the chill of a cold day by soaking in your own hot tub. With so many models to choose from, there’s a relaxing Jacuzzi hot tub to fit any home. And any budget. Jacuzzi produces a full line of affordable hot tubs that will fit your lifestyle and your budget. We categorized our vast selection of hot tubs and spas into four collections:'. $n2 .'The Jacuzzi J-LX Collection'. $n .'The Jacuzzi J-400 Designer Collection'. $n .'The Jacuzzi J-300 Signature Collection'. $n .'The Jacuzzi J-200 Classic Collection'. $n2 .'Why not come in today to wet test a Jacuzzi Hot Tub and find out what you’re missing!';
+			$oot = '<h1>JACUZZI HOT TUBS OVERVIEW</h1>'. $n .'<strong>Jacuzzi® hot tubs, water that moves you!</strong> When you are looking for all the comforts of home, make sure that one of those comforts is a quality Jacuzzi hot tub. Relax and enjoy your own private hydrotherapy session. Rejuvenate sore muscles and joints after a long day of work or play. Spend some family time together. Beat the chill of a cold day by soaking in your own hot tub. With so many models to choose from, there’s a relaxing Jacuzzi hot tub to fit any home. And any budget. Jacuzzi produces a full line of affordable hot tubs that will fit your lifestyle and your budget. We categorized our vast selection of hot tubs and spas into four collections:'. $n2 .'<a href="../j-lx/">The Jacuzzi J-LX Collection</a>'. $n .'<a href="../j-400/">The Jacuzzi J-400 Designer Collection</a>'. $n .'<a href="../j-300/">The Jacuzzi J-300 Signature Collection</a>'. $n .'<a href="../j-200/">The Jacuzzi J-200 Classic Collection</a>'. $n2 .'Why not come in today to wet test a Jacuzzi Hot Tub and find out what you’re missing!';
+			break;
+		case 'j-lx':
+			$oot = '<h1>THE NEW<br /><strong>J-LX</strong> COLLECTION</h1>'. $n .'Experience famous Jacuzzi® patented-jet hydrotherapy in spas that maximize energy efficiency. Designed and tested in an independently certified chamber*, the J-LX and J-LXL with lounge seating minimize your hot tub operating costs.'. $n2 .'Fresh styling includes a new, patented top-deck design that eliminates exposed acrylic. Stainless steel accents add a clean, contemporary look, and UV- and weather-resistant materials improve durability. Besides being beautiful, the J-LX spas are all about luxury and ease:'. $n2 .'<a href="http://www.jacuzzihottubs.com/j-lx/">Click here to learn more about the J-LX Collection, features, and options</a>';
+			break;
+		case 'j-400':
+		case 'j-300':
+		case 'j-200':
+			$oot = '<h1><strong>'. strtoupper($slug) .'</strong> COLLECTION</h1>'. $n .'Experience famous Jacuzzi® patented-jet hydrotherapy in spas that maximize energy efficiency. Designed and tested in an independently certified chamber*, the J-LX and J-LXL with lounge seating minimize your hot tub operating costs.'. $n2 .'Fresh styling includes a new, patented top-deck design that eliminates exposed acrylic. Stainless steel accents add a clean, contemporary look, and UV- and weather-resistant materials improve durability. Besides being beautiful, the J-LX spas are all about luxury and ease:'. $n2 .'<a href="http://www.jacuzzihottubs.com/'. $slug .'/">Click here</a> to learn more about the '. strtoupper($slug) .' Collection, features, and options';
 			break;
 		case 'difference':
 		case 'hydrotherapy':

@@ -4,7 +4,7 @@ Theme URI: http://www.ninthlink.com/jacuzzidealers/
 Description: WP Theme for Jacuzzi Hot Tub Dealers, created by Ninthlink, Inc. + ProGo Themes
 Author: Ninthlink, Inc.
 Author URI: http://www.ninthlink.com
-Version: 1.0.1
+Version: 1.1.0
 */
 
 @font-face {
@@ -237,7 +237,7 @@ ul#mainmenu { margin: 0 0 6px; float: left; width: 100%; padding: 0; list-style:
 ul#mainmenu ul.sub-menu { display: none }
 ul#mainmenu li { float: left; width: 268px; padding: 3px 10px; background: url(images/dwp/navarr.gif) no-repeat 0 50%; font: 13px/16px "GSMT"; text-transform: uppercase }
 ul#mainmenu a { color: #b87f00 }
-ul#mainmenu .current-menu-item a { color: #000; }
+ul#mainmenu .current-menu-item a, ul#mainmenu .current_page_parent a { color: #000; }
 ul#mainmenu li.hidden { display: none }
 /* footer */
 #fbar { float: left; width: 920px; padding: 12px 20px; color: #fff; background: #000 url(images/Greyscale/fbar.png) repeat-x 0 0; font-size: 14px; line-height:20px }
@@ -276,6 +276,11 @@ div.hr { display: block; width: 100%; height: 10px; margin: 20px 0 10px; border-
 
 #coll { float: left; width: 245px; }
 #colr { float: left; width: 345px; padding-left: 34px; border-left: 1px solid #ccc; margin-left: 10px }
+
+.tubs { float: left; width: 366px; position: relative; left: -14px }
+.tub { float: left; width: 171px; height: 186px; position: relative; margin: 0 12px 12px 0; }
+.tub img { float: left; position: absolute; top: 0; left: 0; z-index: 1 }
+.tub .info { float: left; width: 150px; position: absolute; left: 13px; bottom: 16px; z-index: 2; font-size: 13px; line-height: 17px; color: #fff }
 
 .social ul li { float: left; margin: 0; padding: 0 }
 .social a { float: left; margin: 0 5px 0 0; padding: 0; width: 30px; height: 30px; text-indent: -999em; background: url(images/social.png) no-repeat 0 0 }
