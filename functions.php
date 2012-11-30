@@ -56,8 +56,6 @@ function progo_setup() {
 	add_filter( 'wp_nav_menu_objects', 'progo_menufilter', 10, 2 );
 	add_filter( 'site_transient_update_themes', 'progo_update_check' );
 	add_filter( 'admin_post_thumbnail_html', 'progo_admin_post_thumbnail_html' );
-	add_filter( 'wp_mail_content_type', 'progo_mail_content_type' );
-	add_filter( 'embed_oembed_html', 'progo_oembed_fix', 10, 3 );
 	add_filter( 'custom_menu_order', 'progo_admin_menu_order', 99 );
 	add_filter( 'menu_order', 'progo_admin_menu_order', 99 );
 	// force some metaboxes turned ON
