@@ -63,6 +63,12 @@ function progo_setup() {
 	// force some metaboxes turned ON
 	add_filter('get_user_option_managenav-menuscolumnshidden', 'progo_metaboxhidden_defaults', 10, 3 );
 	
+	
+	// cleanup some
+	remove_action( 'wp_head', 'feed_links_extra', 3 );
+	$bye = array( 'wp_generator' ); //array( 'rsd_link', 'wlwmanifest_link', 'wp_generator' );
+	foreach ( $bye as $b ) remove_action( 'wp_head', $b );
+	
 	if ( is_admin() ) {
 		add_action( 'admin_notices', 'progo_admin_notices' );
 	} else {
@@ -918,9 +924,13 @@ if ( ! function_exists( 'progo_add_styles' ) ):
  */
 function progo_add_styles() {
 	if ( ! is_admin() ) {
+		/*
 		if ( $options['footercolor'] != '' ) {
 			add_action('wp_head', 'progo_custombg_color', 1000 );
 		}
+		*/
+		$theme = wp_get_theme();
+		wp_enqueue_style( 'jhtdwp', get_bloginfo( 'stylesheet_url' ), array(), $theme->Version );
 	}
 	do_action('progo_frontend_styles');
 }
