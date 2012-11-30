@@ -4,7 +4,7 @@ Theme URI: http://www.ninthlink.com/jacuzzidealers/
 Description: WP Theme for Jacuzzi Hot Tub Dealers, created by Ninthlink, Inc. + ProGo Themes
 Author: Ninthlink, Inc.
 Author URI: http://www.ninthlink.com
-Version: 1.1.2
+Version: 1.1.3
 */
 
 @font-face {
@@ -235,9 +235,13 @@ img.avatar { float: left; margin: 0 10px 10px 0 }
 
 ul#mainmenu { margin: 0 0 6px; float: left; width: 100%; padding: 0; list-style: none; }
 ul#mainmenu ul.sub-menu { display: none }
-ul#mainmenu li { float: left; width: 268px; padding: 3px 10px; background: url(images/dwp/navarr.gif) no-repeat 0 50%; font: 13px/16px "GSMT"; text-transform: uppercase }
+ul#mainmenu li.current_page_parent ul.sub-menu, ul#mainmenu li.current-menu-item ul.sub-menu { display: block; float: left; width: 100%; margin: 6px 0 3px; padding: 0; list-style: none }
+ul#mainmenu li { float: left; width: 268px; padding: 3px 10px; background: url(images/dwp/navarr.gif) no-repeat 0 8px; font: 13px/16px "GSMT"; text-transform: uppercase }
+ul#mainmenu li li { text-transform:none; padding: 0 0 1px; background: none }
 ul#mainmenu a { color: #b87f00 }
 ul#mainmenu .current-menu-item a, ul#mainmenu .current_page_parent a { color: #000; }
+ul#mainmenu .current-menu-item ul a, ul#mainmenu .current_page_parent ul a { color: #b87f00 }
+ul#mainmenu .current_page_parent ul .current-menu-item a { color: #000; }
 ul#mainmenu li.hidden { display: none }
 /* footer */
 #fbar { float: left; width: 920px; padding: 12px 20px; color: #fff; background: #000 url(images/Greyscale/fbar.png) repeat-x 0 0; font-size: 14px; line-height:20px }
