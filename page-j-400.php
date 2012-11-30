@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: The Collections
+ * Template Name: J-400 Collection
  *
  * @package JHTDWP
  * @since JHTDWP 1.0
