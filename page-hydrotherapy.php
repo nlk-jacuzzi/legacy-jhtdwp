@@ -13,6 +13,14 @@ get_header();
 <div id="main">
 <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 <div class="entry">
+<?php
+	global $post;
+	$pcontent = $post->post_content;
+	if ( $pcontent == '... Page content supplied by theme template file ...' ) {
+		$pcontent = jhtdwp_default_page_content('hydrotherapy');
+	}
+	echo apply_filters('the_content', $pcontent);
+?>
 <p><img src="<?php bloginfo('template_url'); ?>/images/dwp/hydrotherapy.jpg" alt="Advanced Hydrotherapy" width="640" height="781" /></p>
 <h1 class="bigger">Jets</h1>
 <p>High-valume, low-pressure pumps support the exclusive PowerPro jet system in delivering a bold hydromassage. A Patented process creates a 50/50 air-to-water mixture that introduces air from all around the jets for a soothing, yet effective, professional-quality massage. To test the jets in a hot tub, contact your local dealer.</p>
