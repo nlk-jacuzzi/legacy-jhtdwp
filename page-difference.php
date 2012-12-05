@@ -13,6 +13,14 @@ get_header();
 <div id="main">
 <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 <div class="entry">
+<?php
+	global $post;
+	$pcontent = $post->post_content;
+	if ( $pcontent == '... Page content supplied by theme template file ...' ) {
+		$pcontent = jhtdwp_default_page_content('difference');
+	}
+	echo apply_filters('the_content', $pcontent);
+?>
 <p><img src="<?php bloginfo('template_url'); ?>/images/dwp/about.jpg" alt="About Jacuzzi" width="640" height="512" /></p>
 <h1 class="bigger">Innovation Has Always Been at Our Core</h1>
 <p>Jacuzzi believes baths and spas are about more than just getting clean, so we provide high-performance products that celebrate water's ability to refresh and rejuvenate in inspiring ways. Our product innovations are sparked by consumer insights and needs and we constantly strive to deliver experiences that enable you to transition to a better state of mind and body.</p>
