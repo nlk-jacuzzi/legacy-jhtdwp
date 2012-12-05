@@ -2064,7 +2064,7 @@ function jhtdwp_hr( $atts ) {
 add_shortcode('hr', 'jhtdwp_hr');
 
 function jhtdwp_callout_warranty( $atts ) {
-	return '<table width="613"><tr><td width="217"><img src="'. get_bloginfo('template_url') .'/images/dwp/10yearwarranty.jpg" alt="10 Year Warranty" width="140" height="136" /></td><td width="396"><h3>Jacuzzi Offers a 10 Year Warranty<br />on all Hot Tubs</h3><p>When shopping for a hot tub, be sure to consider the warranty. Other brands guarantee\'s last 1 or 2 years, but our quality hot tubs feature limited warranties for up to 10 years! In addition, Jacuzzi\'s network of authorized dealers and technicians is standing by to ensure years of worry-free enjoyment. <a href="http://www.jacuzzihottubs.com/warranty-options/" target="_blank">VIEW WARRANTY OPTIONS</a></p></td></tr></table>';
+	return '<table width="613"><tr><td width="217"><img src="'. get_bloginfo('template_url') .'/images/dwp/10yearwarranty.jpg" alt="10 Year Warranty" width="140" height="136" /></td><td width="396"><h3>Industry Leading 10 Year Warranty</h3><p>When shopping for a hot tub, be sure to consider the warranty. Other brands guarantee\'s last 1 or 2 years, but our quality hot tubs feature limited warranties for up to 10 years! In addition, Jacuzzi\'s network of authorized dealers and technicians is standing by to ensure years of worry-free enjoyment. <a href="http://www.jacuzzihottubs.com/warranty-options/" target="_blank">VIEW WARRANTY OPTIONS</a></p></td></tr></table>';
 }
 add_shortcode('dwp-warranty', 'jhtdwp_callout_warranty');
 
