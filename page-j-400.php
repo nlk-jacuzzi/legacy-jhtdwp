@@ -57,15 +57,6 @@ get_header();
         </div>
     </div>
     <div class="tub">
-        <img src="<?php bloginfo('template_url'); ?>/images/tubs/j-460.jpg" alt="J-460" width="171" height="186" />
-        <div class="info">
-            <strong>J-460</strong><br />
-            Seats: 5 Adults<br />
-            Jets: 33<br />
-            <a href="http://www.jacuzzihottubs.com/j-400/j-460/">view details</a>
-        </div>
-    </div>
-    <div class="tub">
         <img src="<?php bloginfo('template_url'); ?>/images/tubs/j-425.jpg" alt="J-425" width="171" height="186" />
         <div class="info">
             <strong>J-425</strong><br />
