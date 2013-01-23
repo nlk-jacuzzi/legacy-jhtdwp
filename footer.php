@@ -66,12 +66,24 @@ if( strpos( $fmenu, '</li>' ) > 0 ) {
 	
 $options = get_option('progo_options');
 
-if( ($options['businessaddy'] != "") || ($options['businessCSZ'] != "") || ($options['businessphone'] != "") ) {
-	echo $options['businessaddy']. " ". $options['businessCSZ'];
-	if( ($options['businessaddy'] != "") || ($options['businessCSZ'] != "") ) echo " - ";
-	echo $options['businessphone'] .'<br />';
+$locs = get_posts( array(
+			'numberposts'	=> -1,
+			'post_type'		=> 'progo_loc',
+			'orderby'		=> 'menu_order',
+			'order'			=> 'ASC'
+		));
+if ( count($locs) > 0 ) {
+	foreach ( $locs as $k => $l ) {
+		if ( $k > 0 ) echo ' &nbsp;|&nbsp; ';
+		$loc = get_post_meta($l->ID, '_progo_loc', true);
+		if( ($loc['businessaddy'] != "") || ($loc['businessCSZ'] != "") || ($loc['businessphone'] != "") ) {
+			echo ( ($loc['businessaddy'] != "") ? $loc['businessaddy']. ", " : "") . $loc['businessCSZ'];
+			if( ($loc['businessaddy'] != "") || ($loc['businessCSZ'] != "") ) echo " - ";
+			echo $loc['businessphone'];
+		}
+	}
 }
-
+echo '<br />';
 if ( isset( $options['copyright'] ) ) {
 	echo wp_kses($options['copyright'],array());
 } else {

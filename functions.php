@@ -206,13 +206,24 @@ function progo_admin_menu_cleanup() {
 	$sub1 = array_pop($submenu['themes.php']);
 	$sub1[0] = 'Edit Theme Files';
 	$submenu['tools.php'][] = $sub1;
-	// add Theme Options and Homepage Slides pages under APPEARANCE
+	// add Theme Options under APPEARANCE
 	add_theme_page( 'Theme Options', 'Theme Options', 'edit_theme_options', 'progo_admin', 'progo_admin_page' );
 	rsort($submenu['themes.php']);
 	/*
 	$menu[60][0] = 'Theme';
 	$menu[60][4] = 'menu-top menu-icon-progo';
 	*/
+	$hidepages = array( 'link-manager.php' );
+	
+	// check whether to hide Posts , based on if SHOW WHICH BLOG POSTS is shown :
+	if( !jhtdwp_checktoshowblogs() ) {
+		$hidepages[] = 'edit.php';
+		$hidepages[] = 'edit-comments.php';
+	}
+	
+	foreach ( $hidepages as $p ) {
+		remove_menu_page( $p );
+	}
 }
 endif;
 if ( ! function_exists( 'progo_metaboxhidden_defaults' ) ):
@@ -240,20 +251,19 @@ endif;
 if ( ! function_exists( 'progo_admin_menu_order' ) ):
 function progo_admin_menu_order($menu_ord) {
 	if ( ! $menu_ord ) return true;
+	
 	return array(
 		'index.php', // this represents the dashboard link
 		'separator1',
 		'themes.php', // which we changed to ProGo Theme menu area
-//		'admin.php?page=wpcf7', // failed
-		// to do : GRAVITY FORMS and TESTIMONIALS
-		'separator2',
 		'edit.php?post_type=page', // Pages
-		'edit.php?post_type=progo_facebooktabs',
-		'edit.php?post_type=progo_ppc',
+		'edit.php?post_type=progo_homeslide', // Slides
+		'edit.php?post_type=progo_loc', // Location(s)
+		'wpcf7', // Contact Form 7
 		'edit.php', // Posts
-		'upload.php', // Media
 		'edit-comments.php', // Comments
-		'link-manager.php' // Links
+		'upload.php', // Media
+		'separator2',
 	);
 }
 endif;
@@ -319,10 +329,20 @@ try{convertEntities(wpsc_adminL10n);}catch(e){};
         <table class="form-table">
         <?php
 		$addl = array(
-			'Homepage Slides' => array(
+			'Location' => array(
+				'url' => 'edit.php?post_type=progo_loc',
+				'btn' => 'Manage Location(s)',
+				'desc' => 'Edit your business location(s) address &amp; business hours.'
+			),
+			'Slides' => array(
 				'url' => 'edit.php?post_type=progo_homeslide',
-				'btn' => 'Manage Homepage Slides',
+				'btn' => 'Manage Slides',
 				'desc' => 'Edit existing slides, change text, upload images, and add more slides.'
+			),
+			'Contact Forms' => array(
+				'url' => 'admin.php?contactform=1&page=wpcf7',
+				'btn' => 'Manage Contact Forms',
+				'desc' => 'Edit Contact Form 7 Forms that appear across your site, like in the top right corner.'
 			),
 			'Background' => array(
 				'url' => 'themes.php?page=custom-background',
@@ -338,18 +358,13 @@ try{convertEntities(wpsc_adminL10n);}catch(e){};
 				'url' => 'nav-menus.php',
 				'btn' => 'Manage Menu Links',
 				'desc' => 'Control the links in the Header &amp; Footer area of your site.'
-			),
-			'Contact Forms' => array(
-				'url' => 'admin.php?contactform=1&page=wpcf7',
-				'btn' => 'Manage Contact Forms',
-				'desc' => 'Edit Contact Form 7 Forms that appear on your site, like on the Homepage.'
 			)
 		);
 		if ( is_plugin_active( 'contact-form-7/wp-contact-form-7.php' ) === false ) {
 			unset($addl['Contact Forms']);
 		}
 		foreach ( $addl as $k => $v ) {
-			echo '<tr><th scope="row">'. wp_kses($k,array()) .'</th><td><a href="'. esc_url($v['url']) .'" class="button" target="_blank">'. wp_kses($v['btn'],array()) .' &raquo;</a> <span class="description">'. wp_kses($v['desc'],array()) .'</span></td></tr>';
+			echo '<tr><th scope="row"><a href="'. esc_url($v['url']) .'" class="button" target="_blank">'. wp_kses($v['btn'],array()) .' &raquo;</a></th><td><span class="description">'. wp_kses($v['desc'],array()) .'</span></td></tr>';
 		} ?>
         </table><p><br /></p>
         <h3><a name="recommended"></a>Recommended Plugins</h3>
@@ -530,6 +545,7 @@ function progo_admin_init() {
 	
 	add_settings_section( 'progo_dealer', 'Dealership Information', 'progo_section_text', 'progo_dealer' );
 	//Dealer Location Info for Office Info Widget and Footer display.
+	/*
 	add_settings_field( 'progo_businessaddy', 'Street Address', 'progo_field_businessaddy', 'progo_dealer', 'progo_dealer' );
 	add_settings_field( 'progo_businessCSZ', 'City, State, Zip', 'progo_field_businessCSZ', 'progo_dealer', 'progo_dealer' );
 	add_settings_field( 'progo_businessphone', 'Business Phone', 'progo_field_businessphone', 'progo_dealer', 'progo_dealer' );
@@ -540,7 +556,7 @@ function progo_admin_init() {
 	foreach ( $days as $k => $v ) {
 		add_settings_field( 'progo_hours_'. $k, $v, 'progo_field_businesshours', 'progo_hours', 'progo_hours', array($k) );
 	}
-	
+	*/
 	add_settings_section( 'progo_adv', 'Advanced Options', 'progo_section_text', 'progo_adv' );
 	add_settings_field( 'progo_homeseconds', 'Homepage Slide Rotation Speed', 'progo_field_homeseconds', 'progo_adv', 'progo_adv' );
 	add_settings_field( 'progo_homeform', 'Form Code', 'progo_field_form', 'progo_adv', 'progo_adv' );
@@ -718,6 +734,46 @@ function progo_admin_init() {
 		// and send to WELCOME page
 		wp_redirect( get_option( 'siteurl' ) . '/wp-admin/themes.php?page=progo_admin' );
 	}
+	
+	// check, with latest (1.2.0) update, if a Location post type exists
+	// if not, create it based on the office info
+	$locs = get_posts( array(
+				'numberposts'	=> 1,
+				'post_type'		=> 'progo_loc',
+				'order'			=> 'ASC'
+			));
+	if ( count($locs) == 0 ) {
+		$options = get_option('progo_options');
+		// wp_die( '<pre>'. print_r($options,true) .'</pre>' );
+		
+		// and lets also add our first HOMEPAGE SLIDE ?
+		$loc1 = wp_insert_post( array(
+			'post_title' 	=>	'Main Location',
+			'post_type' 	=>	'progo_loc',
+			'post_name'		=>	'main-location',
+			'comment_status'=>	'closed',
+			'ping_status' 	=>	'closed',
+			'post_content' 	=>	'',
+			'post_status' 	=>	'publish',
+			'post_author' 	=>	1,
+			'menu_order'	=>	0
+		));
+		
+		$loc = array(
+			'businessaddy' => ( $options['businessaddy'] != '' ? $options['businessaddy'] : "123 Business St" ),
+			'businessCSZ' => ( $options['businessCSZ'] != '' ? $options['businessCSZ'] : "Los Angeles, CA 90210" ),
+			'businessphone' => ( $options['businessphone'] != '' ? $options['businessphone'] : "858.555.1234" ),
+			'businessemail' => ( $options['businessemail'] != '' ? $options['businessemail'] : "dealer@jacuzzihottubs.com" ),
+			'hours_m' => ( $options['hours_m'] != '' ? $options['hours_m'] : "9am-9pm" ),
+			'hours_t' => ( $options['hours_t'] != '' ? $options['hours_t'] : "9am-9pm" ),
+			'hours_w' => ( $options['hours_w'] != '' ? $options['hours_w'] : "9am-9pm" ),
+			'hours_r' => ( $options['hours_r'] != '' ? $options['hours_r'] : "9am-9pm" ),
+			'hours_f' => ( $options['hours_f'] != '' ? $options['hours_f'] : "9am-9pm" ),
+			'hours_s' => ( $options['hours_s'] != '' ? $options['hours_s'] : "9am-9pm" ),
+			'hours_u' => ( $options['hours_u'] != '' ? $options['hours_u'] : "9am-9pm" ),
+		);
+		update_post_meta($loc1, "_progo_loc", $loc);
+	}
 }
 endif;
 if ( ! function_exists( 'progo_jhtdwp_init' ) ):
@@ -730,7 +786,7 @@ function progo_jhtdwp_init() {
 	register_post_type( 'progo_homeslide',
 		array(
 			'labels' => array(
-				'name' => _x('Homepage Slides', 'post type general name'),
+				'name' => _x('Slides', 'post type general name'),
 				'singular_name' => _x('Slide', 'post type singular name'),
 				'add_new_item' => _x('Add New Slide', 'Homepage Slides'),
 				'edit_item' => __('Edit Slide'),
@@ -740,14 +796,40 @@ function progo_jhtdwp_init() {
 				'not_found' =>  __('No slides found'),
 				'not_found_in_trash' => __('No slides found in Trash'), 
 				'parent_item_colon' => '',
-				'menu_name' => __('Homepage Slides')
+				'menu_name' => __('Slides')
 			),
 			'public' => true,
 			'public_queryable' => true,
 			'exclude_from_search' => true,
-			'show_in_menu' => 'themes.php',
-			'hierarchical' => true,
+			'show_in_menu' => true,
+			'hierarchical' => false,
+			'rewrite' => array( 'slug' => '#slide=' ),
 			'supports' => array( 'title', 'thumbnail', 'revisions', 'page-attributes' ),
+		)
+	);
+	// Location(s)
+	register_post_type( 'progo_loc',
+		array(
+			'labels' => array(
+				'name' => _x('Location', 'post type general name'),
+				'singular_name' => _x('Location', 'post type singular name'),
+				'add_new_item' => _x('Add New Location', 'Location'),
+				'edit_item' => __('Edit Location'),
+				'new_item' => __('New Location'),
+				'view_item' => __('View Location'),
+				'search_items' => __('Search Locations'),
+				'not_found' =>  __('No locations found'),
+				'not_found_in_trash' => __('No locations found in Trash'), 
+				'parent_item_colon' => '',
+				'menu_name' => __('Locations')
+			),
+			'public' => true,
+			'public_queryable' => true,
+			'exclude_from_search' => true,
+			'show_in_menu' => true,
+			'hierarchical' => false,
+			'rewrite' => array( 'slug' => '#loc=' ),
+			'supports' => array( 'title', 'page-attributes' ),
 		)
 	);
 }
@@ -807,6 +889,12 @@ function progo_metabox_cleanup() {
 			add_meta_box( 'progo_slidecontent_box', 'Slide Content', 'progo_slidecontent_box', 'progo_homeslide', 'normal', 'high' );
 			// no need for SEO metaboxes on Homeslides
 			if(isset($wp_meta_boxes['progo_homeslide']['normal']['high']['wpseo_meta'])) unset($wp_meta_boxes['progo_homeslide']['normal']['high']['wpseo_meta']);
+			break;
+		case 'progo_loc':
+			// and we'll keep that information, in a  loc box
+			add_meta_box( 'progo_locbox', 'Location Information', 'progo_locbox', 'progo_loc', 'normal', 'high' );
+			// no need for SEO metaboxes on Locations either
+			if(isset($wp_meta_boxes['progo_loc']['normal']['high']['wpseo_meta'])) unset($wp_meta_boxes['progo_loc']['normal']['high']['wpseo_meta']);
 			break;
 	}
 }
@@ -888,6 +976,94 @@ jQuery(function() {
 });
 /* ]]> */
 	</script>
+    <?php
+}
+endif;
+if ( ! function_exists( 'progo_locbox' ) ):
+/**
+ * custom metabox for Location content area
+ * @since JHTDWP 1.2.0
+ */
+function progo_locbox() {
+	global $post;
+	$custom = get_post_meta($post->ID,'_progo_loc');
+	$content = (array) $custom[0];
+	/*
+	
+		$loc = array(
+			'businessaddy' => ( $options['businessaddy'] != '' ? $options['businessaddy'] : "123 Business St" ),
+			'businessCSZ' => ( $options['businessCSZ'] != '' ? $options['businessCSZ'] : "Los Angeles, CA 90210" ),
+			'businessphone' => ( $options['businessphone'] != '' ? $options['businessphone'] : "858.555.1234" ),
+			'businessemail' => ( $options['businessemail'] != '' ? $options['businessemail'] : "dealer@jacuzzihottubs.com" ),
+			'hours_m' => ( $options['hours_m'] != '' ? $options['hours_m'] : "9am-9pm" ),
+			'hours_t' => ( $options['hours_t'] != '' ? $options['hours_t'] : "9am-9pm" ),
+			'hours_w' => ( $options['hours_w'] != '' ? $options['hours_w'] : "9am-9pm" ),
+			'hours_r' => ( $options['hours_r'] != '' ? $options['hours_r'] : "9am-9pm" ),
+			'hours_f' => ( $options['hours_f'] != '' ? $options['hours_f'] : "9am-9pm" ),
+			'hours_s' => ( $options['hours_s'] != '' ? $options['hours_s'] : "9am-9pm" ),
+			'hours_u' => ( $options['hours_u'] != '' ? $options['hours_u'] : "9am-9pm" ),
+		);
+	*/
+	$businessaddy = isset( $content['businessaddy'] ) ? $content['businessaddy'] : "123 Business St";
+	$businessCSZ = isset( $content['businessCSZ'] ) ? $content['businessCSZ'] : "Los Angeles, CA 90210";
+	$businessphone = isset( $content['businessphone'] ) ? $content['businessphone'] : "858.555.1234";
+	$businessemail = isset( $content['businessemail'] ) ? $content['businessemail'] : "dealer@jacuzzihottubs.com";
+	$hours_m = isset( $content['hours_m'] ) ? $content['hours_m'] : "9am-9pm";
+	$hours_t = isset( $content['hours_t'] ) ? $content['hours_t'] : "9am-9pm";
+	$hours_w = isset( $content['hours_w'] ) ? $content['hours_w'] : "9am-9pm";
+	$hours_r = isset( $content['hours_r'] ) ? $content['hours_r'] : "9am-9pm";
+	$hours_f = isset( $content['hours_f'] ) ? $content['hours_f'] : "9am-9pm";
+	$hours_s = isset( $content['hours_s'] ) ? $content['hours_s'] : "9am-9pm";
+	$hours_u = isset( $content['hours_u'] ) ? $content['hours_u'] : "9am-9pm";
+	?>
+    <table>
+    <tr><th colspan="2" align="left">Business Information</th></tr>
+    <tr>
+    	<th scope="row" align="left"><label for="progo_businessaddy">Street&nbsp;Address</label></th>
+        <td><input id="progo_businessaddy" name="progo_loc[businessaddy]" class="regular-text" type="text" value="<?php esc_html_e( $businessaddy ); ?>" /></td>
+    </tr>
+    <tr>
+        <th scope="row" align="left"><label for="progo_businessCSZ">City,&nbsp;State,&nbsp;Zip</label></th>
+        <td><input id="progo_businessCSZ" name="progo_loc[businessCSZ]" class="regular-text" type="text" value="<?php esc_html_e( $businessCSZ ); ?>" /></td>
+    </tr>
+    <tr>
+        <th scope="row" align="left"><label for="progo_businessphone">Dealer&nbsp;Phone&nbsp;Number</label></th>
+        <td><input id="progo_businessphone" name="progo_loc[businessphone]" class="regular-text" type="text" value="<?php esc_html_e( $businessphone ); ?>" /></td>
+    </tr>
+    <tr>
+        <th scope="row" align="left"><label for="progo_businessemail">Contact&nbsp;Email&nbsp;Address</label></th>
+        <td><input id="progo_businessemail" name="progo_loc[businessemail]" class="regular-text" type="text" value="<?php esc_html_e( $businessemail ); ?>" /></td>
+    </tr>
+    <tr><th colspan="2" align="left"><br />Business Hours</th></tr>
+    <tr>
+        <th scope="row" align="left"><label for="progo_hours_m">Monday</label></th>
+        <td><input id="progo_hours_m" name="progo_loc[hours_m]" class="regular-text" type="text" value="<?php esc_html_e( $hours_m ); ?>" /></td>
+    </tr>
+    <tr>
+        <th scope="row" align="left"><label for="progo_hours_t">Tuesday</label></th>
+        <td><input id="progo_hours_t" name="progo_loc[hours_t]" class="regular-text" type="text" value="<?php esc_html_e( $hours_t ); ?>" /></td>
+    </tr>
+    <tr>
+        <th scope="row" align="left"><label for="progo_hours_w">Wednesday</label></th>
+        <td><input id="progo_hours_w" name="progo_loc[hours_w]" class="regular-text" type="text" value="<?php esc_html_e( $hours_w ); ?>" /></td>
+    </tr>
+    <tr>
+        <th scope="row" align="left"><label for="progo_hours_r">Thursday</label></th>
+        <td><input id="progo_hours_r" name="progo_loc[hours_r]" class="regular-text" type="text" value="<?php esc_html_e( $hours_r ); ?>" /></td>
+    </tr>
+    <tr>
+        <th scope="row" align="left"><label for="progo_hours_f">Friday</label></th>
+        <td><input id="progo_hours_f" name="progo_loc[hours_f]" class="regular-text" type="text" value="<?php esc_html_e( $hours_f ); ?>" /></td>
+    </tr>
+    <tr>
+        <th scope="row" align="left"><label for="progo_hours_s">Saturday</label></th>
+        <td><input id="progo_hours_s" name="progo_loc[hours_s]" class="regular-text" type="text" value="<?php esc_html_e( $hours_s ); ?>" /></td>
+    </tr>
+    <tr>
+        <th scope="row" align="left"><label for="progo_hours_u">Sunday</label></th>
+        <td><input id="progo_hours_u" name="progo_loc[hours_u]" class="regular-text" type="text" value="<?php esc_html_e( $hours_u ); ?>" /></td>
+    </tr>
+</table>
     <?php
 }
 endif;
@@ -1136,6 +1312,17 @@ function progo_save_meta( $post_id ){
 				}
 			}
 			break;
+		case 'progo_loc':
+			if ( current_user_can( 'edit_page', $post_id ) ) {
+				// OK, we're authenticated: we need to find and save the data
+				if ( isset( $_POST['progo_loc'] ) ) {
+					$loc = $_POST['progo_loc'];
+					
+					update_post_meta($post_id, "_progo_loc", $loc);
+					return $loc;
+				}
+			}
+			break;
 	}
 	
 	return $post_id;
@@ -1160,11 +1347,19 @@ function progo_options_defaults() {
 			"whatblog" => 0,
 			"copyright" => "© Copyright ". date('Y') .", All Rights Reserved",
 			// OFFICE INFORMATION
-			"businessaddy" => "",
-			"businessCSZ" => "",
-			"businessphone" => "",
-			"businessemail" => "",
-			"businesshours" => "",
+			/*
+			"businessaddy" => "123 Business St",
+			"businessCSZ" => "Los Angeles, CA 90210",
+			"businessphone" => "858.555.1234",
+			"businessemail" => "dealer@jacuzzihottubs.com",
+			"hours_m" => "9am-9pm",
+			"hours_t" => "9am-9pm",
+			"hours_w" => "9am-9pm",
+			"hours_r" => "9am-9pm",
+			"hours_f" => "9am-9pm",
+			"hours_s" => "9am-9pm",
+			"hours_u" => "9am-9pm",
+			*/
 			// HOMEPAGE SETTINGS
 			"form" => "",
 			"frontpage" => get_option( 'show_on_front' ),
@@ -1572,7 +1767,19 @@ function progo_field_whatblog() {
 	}
 	if ( (int) $options['showdesc'] == 1 ) {
 		echo ' checked="checked"';
-	} ?> />
+	} ?></select>
+    <span class="description">You can <a href="edit.php" target="_blank">manage your own Blog Posts here</a></span>
+    <script type="text/javascript">
+	jQuery(function() {
+		jQuery("#progo_whatblog").bind('change',function() {
+			if ( jQuery(this).val() == 1 ) {
+				jQuery(this).next().show();
+			} else {
+				jQuery(this).next().hide();
+			}
+		}).trigger('change');
+	});
+	</script>
 <?php }
 endif;
 if ( ! function_exists( 'progo_field_copyright' ) ):
@@ -1689,6 +1896,16 @@ if ( ! function_exists( 'progo_section_text' ) ):
  */
 function progo_section_text( $args ) {
 	echo '<a name="'. $args['id'] .'"></a>';
+	// hax
+	if ( $args['id'] == 'progo_dealer' ) {
+		echo '<p><a href="#">You can manage your Dealer Locations and Hours via "Locations" in the left menu</a></p>';
+		/*
+		$options = get_option('progo_options');
+		echo '<div><a href="#" onclick="jQuery(this).hide().next().show(); return false">...debug options...</a><div style="display:none">';
+		echo '<pre>'. print_r($options,true) .'</pre>';
+		echo '</div></div>';
+		*/
+	}
 }
 endif;
 if ( ! function_exists( 'progo_bodyclasses' ) ):
@@ -1714,6 +1931,12 @@ function progo_bodyclasses($classes) {
 	return $classes;
 }
 endif;
+if ( ! function_exists( 'jhtdwp_checktoshowblogs' ) ) :
+function jhtdwp_checktoshowblogs() {
+	$options = get_option('progo_options');
+	return (absint($options['whatblog']) == 1);
+}
+endif;
 if ( ! function_exists( 'progo_menufilter' ) ):
 /**
  * adds some additional classes to Menu Items
@@ -1725,11 +1948,10 @@ function progo_menufilter($items, $args) {
 	$blogID = get_option('progo_blog_id');
 	foreach ( $items as $i ) {
 		if ( $i->object_id == $blogID ) {
-			$options = get_option('progo_options');
-			if ( absint($options['whatblog']) == 0 ) {
-				$i->classes[] = 'hidden';
-			} else {
+			if ( jhtdwp_checktoshowblogs() ) {
 				$i->classes[] = 'blog';
+			} else {
+				$i->classes[] = 'hidden';
 			}
 		}
 	}
@@ -2032,10 +2254,11 @@ function progo_admin_bar_menu() {
 	$wp_admin_bar->remove_menu('widgets');
 	$wp_admin_bar->remove_menu('menus');
 	$wp_admin_bar->add_menu( array( 'parent' => 'progo', 'id' => 'progothemeoptions', 'title' => __('Theme Options'), 'href' => admin_url('themes.php?page=progo_admin') ) );
-	$wp_admin_bar->add_menu( array( 'parent' => 'progo', 'id' => 'homeslides', 'title' => __('Homepage Slides'), 'href' => admin_url('edit.php?post_type=progo_homeslide') ) );
 	$wp_admin_bar->add_menu( array( 'parent' => 'progo', 'id' => 'background', 'title' => __('Background'), 'href' => admin_url('themes.php?page=custom-background') ) );
 	$wp_admin_bar->add_menu( array( 'parent' => 'progo', 'id' => 'widgets', 'title' => __('Widgets'), 'href' => admin_url('widgets.php') ) );
 	$wp_admin_bar->add_menu( array( 'parent' => 'progo', 'id' => 'menus', 'title' => __('Menus'), 'href' => admin_url('nav-menus.php') ) );
+	$wp_admin_bar->add_menu( array( 'parent' => 'progo', 'id' => 'homeslides', 'title' => __('Slides'), 'href' => admin_url('edit.php?post_type=progo_homeslide') ) );
+	$wp_admin_bar->add_menu( array( 'parent' => 'progo', 'id' => 'loc', 'title' => __('Locations &amp; Hours'), 'href' => admin_url('edit.php?post_type=progo_loc') ) );
 }
 
 if ( ! function_exists( 'progo_nomenu_cb' ) ):
@@ -2073,13 +2296,32 @@ function jhtdwp_callout_broch( $atts ) {
 }
 add_shortcode('dwp-brochure', 'jhtdwp_callout_broch');
 
+// [dwp-contact loc="123"]
 function jhtdwp_callout_contact( $atts ) {
-	$options = get_option( 'progo_options' );
+	extract( shortcode_atts( array(
+		'loc' => 0
+	), $atts ) );
+	
+	if ( $loc == 0 ) { // get first loc
+		$locs = get_posts( array(
+			'numberposts'	=> 1,
+			'post_type'		=> 'progo_loc',
+			'orderby'		=> 'menu_order',
+			'order'			=> 'ASC'
+		));
+		if ( count($locs) == 0 ) return '';
+		// else
+		$loc = $locs[0]->ID;
+	}
+	$oot = ''; //<strong>loc #'. $loc .'</strong>';
+//	$oot .= '<pre>'. print_r($atts,true) .'</pre>';
+
+	$options = get_post_meta( $loc, '_progo_loc', true );
 	$mapaddy = str_replace(' ', '+', $options['businessaddy'] .' '. $options['businessCSZ']);
 	$maplink = 'http://maps.google.com/maps?q='. $mapaddy;
-	$oot = '<table class="contacttable" width="632" height="218"><tr valign="top"><td width="233"><div class="cmap">';
+	$oot .= '<table class="contacttable" width="632" height="218"><tr valign="top"><td width="233"><div class="cmap">';
 	$oot .= '<iframe width="206" height="206" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps?q='. $mapaddy .'&amp;iwloc=&amp;output=embed"></iframe>';
-	$oot .= '</div></td><td width="212"><h4>ADDRESS</h4><p>'. esc_attr($options['businessaddy']) .'<br />'. esc_attr($options['businessCSZ']) .'<br /><a href="'. esc_url($maplink) .'" target="_blank">VIEW MAP</a><br />'. esc_attr($options['businessphone']) .'<br /><span class="eml">'. esc_attr($options['businessemail']) .'</span></p></td><td width="187"><h4>HOURS</h4><p>';
+	$oot .= '</div></td><td width="212"><h4>ADDRESS</h4><p>'. esc_attr($options['businessaddy']) .'<br />'. esc_attr($options['businessCSZ']) .'<br /><a href="'. esc_url($maplink) .'" target="_blank">VIEW MAP</a><br /><br />'. esc_attr($options['businessphone']) .'<br /><span class="eml">'. esc_attr($options['businessemail']) .'</span></p></td><td width="187"><h4>HOURS</h4><p>';
 	
 	$days = jhtdwp_busdays();
 	foreach ( $days as $k => $v ) {
@@ -2139,4 +2381,45 @@ Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh 
 			break;
 	}
 	return $oot;
+}
+
+
+add_filter( 'post_updated_messages', 'progo_update_messages' );
+function progo_update_messages( $messages ) {
+	global $post, $post_ID;
+	
+	$messages['progo_homeslide'] = array(
+		0 => '', // Unused. Messages start at index 1.
+		1 => sprintf( __('Slide updated. <a href="%s">View Homepage</a>'), esc_url( get_bloginfo('url') ) ),
+		2 => __('Custom field updated.'),
+		3 => __('Custom field deleted.'),
+		4 => __('Slide updated.'),
+		/* translators: %s: date and time of the revision */
+		5 => isset($_GET['revision']) ? sprintf( __('Slide restored to revision from %s'), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+		6 => __('Slide published.'),
+		7 => __('Slide saved.'),
+		8 => __('Slide submitted.'),
+		9 => sprintf( __('Slide scheduled for: <strong>%1$s</strong>.'),
+		  // translators: Publish box date format, see http://php.net/date
+		  date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ) ),
+		10 => __('Slide draft updated.'),
+	);
+	
+	$messages['progo_loc'] = array(
+		0 => '', // Unused. Messages start at index 1.
+		1 => sprintf( __('Location updated. <a href="%s">View Homepage</a>'), esc_url( get_bloginfo('url') ) ),
+		2 => __('Custom field updated.'),
+		3 => __('Custom field deleted.'),
+		4 => __('Location updated.'),
+		/* translators: %s: date and time of the revision */
+		5 => isset($_GET['revision']) ? sprintf( __('Location restored to revision from %s'), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+		6 => __('Location published.'),
+		7 => __('Location saved.'),
+		8 => __('Location submitted.'),
+		9 => sprintf( __('Location scheduled for: <strong>%1$s</strong>.'),
+		  // translators: Publish box date format, see http://php.net/date
+		  date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ) ),
+		10 => __('Location draft updated.'),
+	);
+	return $messages;
 }
