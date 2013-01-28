@@ -803,7 +803,6 @@ function progo_jhtdwp_init() {
 			'exclude_from_search' => true,
 			'show_in_menu' => true,
 			'hierarchical' => false,
-			'rewrite' => array( 'slug' => '#slide=' ),
 			'supports' => array( 'title', 'thumbnail', 'revisions', 'page-attributes' ),
 		)
 	);
@@ -828,7 +827,6 @@ function progo_jhtdwp_init() {
 			'exclude_from_search' => true,
 			'show_in_menu' => true,
 			'hierarchical' => false,
-			'rewrite' => array( 'slug' => '#loc=' ),
 			'supports' => array( 'title', 'page-attributes' ),
 		)
 	);
@@ -2111,7 +2109,7 @@ function progo_admin_notices() {
 				break;
 			case 9: // Business Info?
 				$pct = 90;
-				$nst = '<a href="'. admin_url('themes.php?page=progo_admin#progo_info') .'">Enter your Business Information</a>, like Street Address, Phone Number, and Hours of Operation. <strong>This is the last step to setting up your new Dealer site!</strong> When you are all set, <a href="'. wp_nonce_url("admin.php?progo_admin_action=businfo_set", 'progo_businfo_set') .'">click here to remove this message</a>.';
+				$nst = '<a href="'. admin_url('edit.php?post_type=progo_loc') .'">Enter your Business Information</a>, like Street Address, Phone Number, and Hours of Operation. <strong>This is the last step to setting up your new Dealer site!</strong> When you are all set, <a href="'. wp_nonce_url("admin.php?progo_admin_action=businfo_set", 'progo_businfo_set') .'">click here to remove this message</a>.';
 				break;
 		}
 		echo '<p>Your Jacuzzi Hot Tubs Dealer site is <strong>'. $pct .'% Complete</strong> - Next Step: '. $nst .'</p></div>';
