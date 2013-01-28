@@ -2182,11 +2182,11 @@ function progo_update_check($data) {
 		} else {
 			update_option( 'progo_jhtdwp_apiauth', 'new' );
 		}
-		if ( version_compare($data->checked[jhtdwp], $response[new_version], '<') ) {
-			$data->response[jhtdwp] = array(
-				'new_version' => $response[new_version],
-				'url' => $response[url],
-				'package' => $response[package]
+		if ( version_compare($data->checked['jhtdwp'], $response['new_version'], '<') ) {
+			$data->response['jhtdwp'] = array(
+				'new_version' => $response['new_version'],
+				'url' => $response['url'],
+				'package' => $response['package']
 			);
 		}
 	}
