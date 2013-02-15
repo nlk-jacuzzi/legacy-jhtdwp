@@ -12,6 +12,8 @@
 <div id="ptop">
 <div id="pagetop" class="slides grid_8 Layout1">
 <?php
+$options = get_option('progo_options');
+
 global $wp_query, $post;
 $original_query = $wp_query;
 $slides = get_posts('post_type=progo_homeslide&post_status=publish&posts_per_page=-1&orderby=menu_order&order=ASC');
@@ -63,8 +65,6 @@ if( strpos( $fmenu, '</li>' ) > 0 ) {
 } else {
 	echo ' nom">';
 }
-	
-$options = get_option('progo_options');
 
 $locs = get_posts( array(
 			'numberposts'	=> -1,
