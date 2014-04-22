@@ -12,25 +12,28 @@ if ( is_array($options) == false ) {
 		'form' => ''
 	);
 }
-
-$locs = get_posts( array(
-			'numberposts'	=> 1,
-			'post_type'		=> 'progo_loc',
-			'orderby'		=> 'menu_order',
-			'order'			=> 'ASC'
-));
-if ( count($locs) == 0 ) {
-	$loc = array(
-		'businessaddy' => '',
-		'businessCSZ' => ''
-	);
-} else {
-	$loc = get_post_meta($locs[0]->ID, '_progo_loc', true);
-}
 ?>
 <div class="pbpform"><a name="pbpform"></a>
 <table class="tar" width="100%"><tr><td><?php
-echo esc_attr($loc['businessaddy']) .'<br />'.  esc_attr($loc['businessCSZ']);
+if ( is_active_sidebar('topright') ) {
+	dynamic_sidebar('topright');
+} else {
+	$locs = get_posts( array(
+				'numberposts'	=> 1,
+				'post_type'		=> 'location',
+				'orderby'		=> 'menu_order',
+				'order'			=> 'ASC'
+	));
+	if ( count($locs) == 0 ) {
+		$loc = array(
+			'businessaddy' => '',
+			'businessCSZ' => ''
+		);
+	} else {
+		$loc = get_post_meta($locs[0]->ID, '_location', true);
+	}
+	echo esc_attr($loc['businessaddy']) .'<br />'.  esc_attr($loc['businessCSZ']);
+}
 ?></td></tr></table>
 <?php echo apply_filters('the_content', $options['form']); ?>
 </div>

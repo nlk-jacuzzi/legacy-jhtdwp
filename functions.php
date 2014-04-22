@@ -364,35 +364,31 @@ try{convertEntities(wpsc_adminL10n);}catch(e){};
 			unset($addl['Contact Forms']);
 		}
 		foreach ( $addl as $k => $v ) {
-			echo '<tr><th scope="row"><a href="'. esc_url($v['url']) .'" class="button" target="_blank">'. wp_kses($v['btn'],array()) .' &raquo;</a></th><td><span class="description">'. wp_kses($v['desc'],array()) .'</span></td></tr>';
+			echo '<tr><th scope="row"><a href="'. admin_url($v['url']) .'" class="button" target="_blank">'. wp_kses($v['btn'],array()) .' &raquo;</a></th><td><span class="description">'. wp_kses($v['desc'],array()) .'</span></td></tr>';
 		} ?>
         </table><p><br /></p>
         <h3><a name="recommended"></a>Recommended Plugins</h3>
-		<?php if ( function_exists( 'alex_recommends_widget' ) ) {
-            alex_recommends_widget();
-        } else { ?>
-            <p>The following plugins can help improve various aspects of your WordPress + JHT DWP Themes site:</p>
-            <ul style="list-style:outside; padding: 0 1em">
-            <?php
-            $pRec = array();
-            $pRec[] = array('name'=>'WordPress SEO by Yoast','stub'=>'wordpress-seo','desc'=>'Out-of-the-box SEO. Easily control your keywords, meta descriptions, and more');
-            $pRec[] = array('name'=>'Google Analytics for WordPress','stub'=>'google-analytics-for-wordpress','desc'=>'Add Google Analytics to your site, with options to track external links, mailto\'s, and downloads');
-            $pRec[] = array('name'=>'Google Tag Manager','stub'=>'google-tag-manager','desc'=>'Makes it even easier to use Google Tag Manager, adding all the code itself');
-            $pRec[] = array('name'=>'ShareThis','stub'=>'share-this','desc'=>'Get more exposure for your site as visitors share it with their friends');
-            $pRec[] = array('name'=>'NextGEN Gallery','stub'=>'nextgen-gallery','desc'=>'A fully integrated Image Gallery plugin with dozens of options and features');
-            $pRec[] = array('name'=>'Duplicate Post','stub'=>'duplicate-post','desc'=>'Add functionality to Save Page As...');
-            $pRec[] = array('name'=>'WB DB Backup','stub'=>'wp-db-backup','desc'=>'On-demand backup of your WordPress database');
-            
-            foreach( $pRec as $plug ) {
-                echo '<li>';
-                echo '<a title="Learn more &amp; install '. esc_attr( $plug['name'] ) .'" class="thickbox" href="'. get_bloginfo('url') .'/wp-admin/plugin-install.php?tab=plugin-information&amp;plugin='. $plug['stub'] .'&amp;TB_iframe=true&amp;width=640&amp;height=560">';
-                echo esc_html($plug['name']) .'</a> : '. esc_html($plug['desc']) .'</li>';
-            }
-            ?>
-            <li><a href="http://www.gravityforms.com/" target="_blank">Gravity Forms</a> : when Contact Form 7 just isn't cutting it. Gravity Forms is a super robust Forms plugin, with Drag and Drop form creation, and so much more</li>
-            </ul>
-    <?php } ?>
-            <p><br /></p>
+        <p>The following plugins can help improve various aspects of your WordPress + JHT DWP Themes site:</p>
+        <ul style="list-style:outside; padding: 0 1em">
+        <?php
+        $pRec = array();
+        $pRec[] = array('name'=>'WordPress SEO by Yoast','stub'=>'wordpress-seo','desc'=>'Out-of-the-box SEO. Easily control your keywords, meta descriptions, and more');
+        $pRec[] = array('name'=>'Google Analytics for WordPress','stub'=>'google-analytics-for-wordpress','desc'=>'Add Google Analytics to your site, with options to track external links, mailto\'s, and downloads');
+        $pRec[] = array('name'=>'Google Tag Manager','stub'=>'google-tag-manager','desc'=>'Makes it even easier to use Google Tag Manager, adding all the code itself');
+        $pRec[] = array('name'=>'ShareThis','stub'=>'share-this','desc'=>'Get more exposure for your site as visitors share it with their friends');
+        $pRec[] = array('name'=>'NextGEN Gallery','stub'=>'nextgen-gallery','desc'=>'A fully integrated Image Gallery plugin with dozens of options and features');
+        $pRec[] = array('name'=>'Duplicate Post','stub'=>'duplicate-post','desc'=>'Add functionality to Save Page As...');
+        $pRec[] = array('name'=>'WB DB Backup','stub'=>'wp-db-backup','desc'=>'On-demand backup of your WordPress database');
+        
+        foreach( $pRec as $plug ) {
+            echo '<li>';
+            echo '<a title="Learn more &amp; install '. esc_attr( $plug['name'] ) .'" class="thickbox" href="'. admin_url('plugin-install.php?tab=plugin-information&amp;plugin='. $plug['stub'] .'&amp;TB_iframe=true&amp;width=640&amp;height=560') .'">';
+            echo esc_html($plug['name']) .'</a> : '. esc_html($plug['desc']) .'</li>';
+        }
+        ?>
+        <li><a href="http://www.gravityforms.com/" target="_blank">Gravity Forms</a> : when Contact Form 7 just isn't cutting it. Gravity Forms is a super robust Forms plugin, with Drag and Drop form creation, and so much more</li>
+        </ul>
+        <p><br /></p>
     <div class="clear"></div>
     </div>
 	<?php
@@ -417,7 +413,7 @@ function progo_custom_login_logo() {
 		echo "<!-- login screen here... overwrite logo with custom logo -->\n"; 
 	}else { ?>
 <style type="text/css">
-.login h1 a { background: url(<?php bloginfo( 'template_url' ); ?>/images/logo_progo.png) no-repeat top center; height: 80px; }
+.login h1 a { background: url(<?php bloginfo( 'template_url' ); ?>/images/logo_progo.png) no-repeat top center; width: 150px; height: 80px; }
 </style>
 <?php }
 }
@@ -446,7 +442,7 @@ function progo_admin_page_styles() {
 				wp_enqueue_style( 'global' );
 				wp_enqueue_style( 'wp-admin' );
 				wp_enqueue_style( 'thickbox' );
-				wp_enqueue_style('farbtastic');
+				wp_enqueue_style( 'farbtastic' );
 		}
 	}
 	wp_enqueue_style( 'progo_admin', get_bloginfo( 'template_url' ) .'/admin-style.css' );
@@ -732,7 +728,7 @@ function progo_admin_init() {
 		progo_options_defaults();
 		
 		// and send to WELCOME page
-		wp_redirect( get_option( 'siteurl' ) . '/wp-admin/themes.php?page=progo_admin' );
+		wp_redirect( admin_url( 'themes.php?page=progo_admin' ) );
 	}
 	
 	// check, with latest (1.2.0) update, if a Location post type exists
@@ -859,8 +855,17 @@ function progo_jhtdwp_widgets() {
 		'before_title' => '<h3 class="title"><span class="spacer">',
 		'after_title' => '</span></h3>'
 	));
+	register_sidebar(array(
+		'name' => 'Top Right Arrow',
+		'id' => 'topright',
+		'description' => 'Optional widgetized area to override Location info in top right arrow on all pages',
+		'before_widget' => '',
+		'after_widget' => '',
+		'before_title' => '<div style="display:none">',
+		'after_title' => '</div>'
+	));
 	
-	$progo_widgets = array( 'FBLikeBox', 'Tweets', 'Share', 'Social' );
+	$progo_widgets = array( 'FBLikeBox', 'Share', 'Social' );
 	foreach ( $progo_widgets as $w ) {
 		require_once( 'widgets/widget-'. strtolower($w) .'.php' );
 		register_widget( 'ProGo_Widget_'. $w );
@@ -1127,7 +1132,7 @@ function progo_reset_logo(){
 	update_option( 'progo_options', $options );
 	update_option( 'progo_settings_just_saved', 1 );
 	
-	wp_redirect( get_option('siteurl') .'/wp-admin/themes.php?page=progo_admin' );
+	wp_redirect( admin_url( 'themes.php?page=progo_admin' ) );
 	exit();
 }
 endif;
@@ -1156,7 +1161,7 @@ function progo_businfo_set(){
 	// menus are set - proceed to next step
 	update_option( 'progo_jhtdwp_onstep', 10);
 	
-	wp_redirect( admin_url("themes.php?page=progo_admin") );
+	wp_redirect( admin_url( 'themes.php?page=progo_admin' ) );
 	exit();
 }
 endif;
@@ -1744,7 +1749,7 @@ function progo_field_showdesc() {
 	if ( (int) $options['showdesc'] == 1 ) {
 		echo ' checked="checked"';
 	} ?> />
-Show the Site Slogan next to the Logo at the top of <a target="_blank" href="<?php echo esc_url( trailingslashit( get_bloginfo( 'url' ) ) ); ?>">your site</a></label>
+Show the Site Slogan next to the Logo at the top of <a target="_blank" href="<?php bloginfo( 'url' ); ?>">your site</a></label>
 </fieldset>
 <?php }
 endif;
@@ -1766,7 +1771,7 @@ function progo_field_whatblog() {
 	if ( (int) $options['showdesc'] == 1 ) {
 		echo ' checked="checked"';
 	} ?></select>
-    <span class="description">You can <a href="edit.php" target="_blank">manage your own Blog Posts here</a></span>
+    <span class="description">You can <a href="<?php admin_url('edit.php'); ?>" target="_blank">manage your own Blog Posts here</a></span>
     <script type="text/javascript">
 	jQuery(function() {
 		jQuery("#progo_whatblog").bind('change',function() {
@@ -1896,7 +1901,7 @@ function progo_section_text( $args ) {
 	echo '<a name="'. $args['id'] .'"></a>';
 	// hax
 	if ( $args['id'] == 'progo_dealer' ) {
-		echo '<p><a href="#">You can manage your Dealer Locations and Hours via "Locations" in the left menu</a></p>';
+		echo '<p><a href="'. admin_url('edit.php?post_type=location') .'">You can manage your Dealer Locations and Hours via "Locations" in the left menu</a></p>';
 		/*
 		$options = get_option('progo_options');
 		echo '<div><a href="#" onclick="jQuery(this).hide().next().show(); return false">...debug options...</a><div style="display:none">';
@@ -2025,13 +2030,13 @@ function progo_admin_notices() {
 		<p><?php
         switch($apiauth) {
 			case 'new':	// key has not been entered yet
-				echo '<a href="themes.php?page=progo_admin" title="Site Settings">Please enter your JHT DWP API Key to Activate your theme.</a>';
+				echo '<a href="'. admin_url( 'themes.php?page=progo_admin' ) .'" title="Site Settings">Please enter your JHT DWP API Key to Activate your theme.</a>';
 				break;
 			case '999': // invalid key?
-				echo 'Your JHT DWP API Key appears to be invalid. <a href="themes.php?page=progo_admin" title="Site Settings">Please double check it.</a>';
+				echo 'Your JHT DWP API Key appears to be invalid. <a href="'. admin_url( 'themes.php?page=progo_admin' ) .'" title="Site Settings">Please double check it.</a>';
 				break;
 			case '300': // wrong site URL?
-				echo '<a href="themes.php?page=progo_admin" title="Site Settings">The JHT DWP API Key you entered</a> is already bound to another URL.';
+				echo '<a href="'. admin_url( 'themes.php?page=progo_admin' ) .'" title="Site Settings">The JHT DWP API Key you entered</a> is already bound to another URL.';
 				break;
 		}
 		?></p>
@@ -2041,7 +2046,7 @@ function progo_admin_notices() {
 	
 	if( get_option('progo_settings_just_saved')==true ) { ?>
 	<div class="updated fade">
-		<p>Settings updated. <a href="<?php bloginfo('url'); ?>/">View site</a></p>
+		<p>Settings updated. <a href="<?php bloginfo('url'); ?>">View site</a></p>
 	</div>
 <?php
 		update_option('progo_settings_just_saved',false);
@@ -2076,17 +2081,17 @@ function progo_admin_notices() {
 				$nst = 'Activate your JHT DWP API Key';
 				break;
 			case 2: // INSTALL CF7
-				$lnk = ( function_exists( 'wp_nonce_url' ) ) ? wp_nonce_url( 'update.php?action=install-plugin&amp;plugin=contact-form-7', 'install-plugin_contact-form-7' ) : 'plugin-install.php';
+				$lnk = ( function_exists( 'wp_nonce_url' ) ) ? wp_nonce_url( 'update.php?action=install-plugin&amp;plugin=contact-form-7', 'install-plugin_contact-form-7' ) : admin_url('plugin-install.php');
 				$pct = 25;
 				$nst = '<a href="'. esc_url( $lnk ) .'">Click Here to Install the Contact Form 7 Plugin</a>';
 				break;
 			case 3: // ACTIVATE CF7
-				$lnk = ( function_exists( 'wp_nonce_url' ) ) ? wp_nonce_url( 'plugins.php?action=activate&amp;plugin=contact-form-7/wp-contact-form-7.php', 'activate-plugin_contact-form-7/wp-contact-form-7.php' ) : 'plugins.php';
+				$lnk = ( function_exists( 'wp_nonce_url' ) ) ? wp_nonce_url( 'plugins.php?action=activate&amp;plugin=contact-form-7/wp-contact-form-7.php', 'activate-plugin_contact-form-7/wp-contact-form-7.php' ) : admin_url('plugins.php');
 				$pct = 35;
 				$nst = '<a href="'. esc_url( $lnk ) .'">Click Here to Activate the Contact Form 7 Plugin</a>';
 				break;
 			case 4: // INSTALL CF7DB
-				$lnk = ( function_exists( 'wp_nonce_url' ) ) ? wp_nonce_url( 'update.php?action=install-plugin&amp;plugin=contact-form-7-to-database-extension', 'install-plugin_contact-form-7-to-database-extension' ) : 'plugin-install.php';
+				$lnk = ( function_exists( 'wp_nonce_url' ) ) ? wp_nonce_url( 'update.php?action=install-plugin&amp;plugin=contact-form-7-to-database-extension', 'install-plugin_contact-form-7-to-database-extension' ) : admin_url('plugin-install.php');
 				$pct = 45;
 				$nst = '<a href="'. esc_url( $lnk ) .'">Click Here to Install the Contact Form 7 to Database Extension Plugin</a>';
 				break;
@@ -2207,7 +2212,7 @@ function progo_to_twentyten() {
 		$msg = 'This ProGo Themes site is currently not Activated.';
 		
 		if(current_user_can('edit_pages')) {
-			$msg .= '<br /><br /><a href="'. trailingslashit(get_bloginfo('url')) .'wp-admin/themes.php?page=progo_admin">Click here to update your API Key</a>';
+			$msg .= '<br /><br /><a href="'. admin_url('themes.php?page=progo_admin') .'">Click here to update your API Key</a>';
 		}
 		wp_die($msg);
 	}
