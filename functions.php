@@ -1901,7 +1901,7 @@ function progo_section_text( $args ) {
 	echo '<a name="'. $args['id'] .'"></a>';
 	// hax
 	if ( $args['id'] == 'progo_dealer' ) {
-		echo '<p><a href="'. admin_url('edit.php?post_type=location') .'">You can manage your Dealer Locations and Hours via "Locations" in the left menu</a></p>';
+		echo '<p><a href="'. admin_url('edit.php?post_type=progo_loc') .'">You can manage your Dealer Locations and Hours via "Locations" in the left menu</a></p>';
 		/*
 		$options = get_option('progo_options');
 		echo '<div><a href="#" onclick="jQuery(this).hide().next().show(); return false">...debug options...</a><div style="display:none">';

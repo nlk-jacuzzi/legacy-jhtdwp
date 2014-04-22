@@ -20,7 +20,7 @@ if ( is_active_sidebar('topright') ) {
 } else {
 	$locs = get_posts( array(
 				'numberposts'	=> 1,
-				'post_type'		=> 'location',
+				'post_type'		=> 'progo_loc',
 				'orderby'		=> 'menu_order',
 				'order'			=> 'ASC'
 	));
@@ -30,7 +30,7 @@ if ( is_active_sidebar('topright') ) {
 			'businessCSZ' => ''
 		);
 	} else {
-		$loc = get_post_meta($locs[0]->ID, '_location', true);
+		$loc = get_post_meta($locs[0]->ID, '_progo_loc', true);
 	}
 	echo esc_attr($loc['businessaddy']) .'<br />'.  esc_attr($loc['businessCSZ']);
 }
