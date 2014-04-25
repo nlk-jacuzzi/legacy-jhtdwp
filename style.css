@@ -4,7 +4,7 @@ Theme URI: http://www.ninthlink.com/jacuzzidealers/
 Description: WP Theme for Jacuzzi Hot Tub Dealers, created by Ninthlink, Inc. + ProGo Themes
 Author: Ninthlink, Inc.
 Author URI: http://www.ninthlink.com
-Version: 1.2.5
+Version: 1.2.6
 */
 
 @font-face {
@@ -225,7 +225,7 @@ img.avatar { float: left; margin: 0 10px 10px 0 }
 .block.fblike { padding: 5px 0 5px 5px; width: 293px }
 .block.fblike h3.title { margin: -5px 0 5px -5px }
 
-.block.calltoday h2 { font-size: 18px; font-family: "GSL"; font-weight: normal; display: block; padding: 0 0 24px; background: url(images/dwp/callline.png) no-repeat 0 100% }
+.block.calltoday h2 { font: 18px/1.5 "GSL"; display: block; padding: 0 0 24px; background: url(images/dwp/callline.png) no-repeat 0 100% }
 .block.calltoday h2 strong { font-weight: normal; font-family: "GSMT" }
 
 .block p.blogpost { display: block; padding: 2px 7px 13px; border-bottom: 1px solid #ccc; margin: 0 0 10px }
