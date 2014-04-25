@@ -864,6 +864,15 @@ function progo_jhtdwp_widgets() {
 		'before_title' => '<div style="display:none">',
 		'after_title' => '</div>'
 	));
+	register_sidebar(array(
+		'name' => 'Call Today override',
+		'id' => 'calltoday',
+		'description' => 'Optional widgetized area to override "Call Today" spot in right column on all pages',
+		'before_widget' => '<div class="block calltoday">',
+		'after_widget' => '</div>',
+		'before_title' => '<div style="display:none">',
+		'after_title' => '</div>'
+	));
 	
 	$progo_widgets = array( 'FBLikeBox', 'Share', 'Social' );
 	foreach ( $progo_widgets as $w ) {
