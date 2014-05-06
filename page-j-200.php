@@ -26,7 +26,7 @@ get_header();
             <strong>J-280</strong><br />
             Seats: 6-7 Adults<br />
             Jets: 44<br />
-            <a href="http://www.jacuzzihottubs.com/j-200/j-280/">view details</a>
+            <a href="http://www.jacuzzi.com/hot-tubs/j-200/j-280/">view details</a>
         </div>
     </div>
     <div class="tub">
@@ -35,7 +35,7 @@ get_header();
             <strong>J-275</strong><br />
             Seats: 6 Adults<br />
             Jets: 45<br />
-            <a href="http://www.jacuzzihottubs.com/j-200/j-275/">view details</a>
+            <a href="http://www.jacuzzi.com/hot-tubs/j-200/j-275/">view details</a>
         </div>
     </div>
     <div class="tub">
@@ -44,7 +44,7 @@ get_header();
             <strong>J-245</strong><br />
             Seats: 7 Adults<br />
             Jets: 35<br />
-            <a href="http://www.jacuzzihottubs.com/j-200/j-245/">view details</a>
+            <a href="http://www.jacuzzi.com/hot-tubs/j-200/j-245/">view details</a>
         </div>
     </div>
     <div class="tub">
@@ -53,7 +53,7 @@ get_header();
             <strong>J-235</strong><br />
             Seats: 6 Adults<br />
             Jets: 35<br />
-            <a href="http://www.jacuzzihottubs.com/j-200/j-235/">view details</a>
+            <a href="http://www.jacuzzi.com/hot-tubs/j-200/j-235/">view details</a>
         </div>
     </div>
     <div class="tub">
@@ -62,7 +62,7 @@ get_header();
             <strong>J-210</strong><br />
             Seats: 4 Adults<br />
             Jets: 19<br />
-            <a href="http://www.jacuzzihottubs.com/j-200/j-210/">view details</a>
+            <a href="http://www.jacuzzi.com/hot-tubs/j-200/j-210/">view details</a>
         </div>
     </div>
 </div>

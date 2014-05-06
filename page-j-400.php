@@ -26,7 +26,7 @@ get_header();
             <strong>J-495</strong><br />
             Seats: 7-9 Adults<br />
             Jets: 62<br />
-            <a href="http://www.jacuzzihottubs.com/j-400/j-495/">view details</a>
+            <a href="http://www.jacuzzi.com/hot-tubs/j-400/j-495/">view details</a>
         </div>
     </div>
     <div class="tub">
@@ -34,8 +34,8 @@ get_header();
         <div class="info">
             <strong>J-480</strong><br />
             Seats: 6 Adults<br />
-            Jets: 48<br />
-            <a href="http://www.jacuzzihottubs.com/j-400/j-480/">view details</a>
+            Jets: 52<br />
+            <a href="http://www.jacuzzi.com/hot-tubs/j-400/j-480/">view details</a>
         </div>
     </div>
     <div class="tub">
@@ -43,17 +43,17 @@ get_header();
         <div class="info">
             <strong>J-470</strong><br />
             Seats: 6-7 Adults<br />
-            Jets: 39<br />
-            <a href="http://www.jacuzzihottubs.com/j-400/j-470/">view details</a>
+            Jets: 43<br />
+            <a href="http://www.jacuzzi.com/hot-tubs/j-400/j-470/">view details</a>
         </div>
     </div>
     <div class="tub">
         <img src="<?php bloginfo('template_url'); ?>/images/tubs/j-465.jpg" alt="J-465" width="171" height="186" />
         <div class="info">
             <strong>J-465</strong><br />
-            Seats: 4-5 Adults<br />
-            Jets: 37<br />
-            <a href="http://www.jacuzzihottubs.com/j-400/j-465/">view details</a>
+            Seats: 6 Adults<br />
+            Jets: 39<br />
+            <a href="http://www.jacuzzi.com/hot-tubs/j-400/j-465/">view details</a>
         </div>
     </div>
     <div class="tub">
@@ -62,7 +62,7 @@ get_header();
             <strong>J-425</strong><br />
             Seats: 4-5 Adults<br />
             Jets: 27<br />
-            <a href="http://www.jacuzzihottubs.com/j-400/j-425/">view details</a>
+            <a href="http://www.jacuzzi.com/hot-tubs/j-400/j-425/">view details</a>
         </div>
     </div>
     <div class="tub">
@@ -71,7 +71,7 @@ get_header();
             <strong>J-415</strong><br />
             Seats: 2-3 Adults<br />
             Jets: 21<br />
-            <a href="http://www.jacuzzihottubs.com/j-400/j-415/">view details</a>
+            <a href="http://www.jacuzzi.com/hot-tubs/j-400/j-415/">view details</a>
         </div>
     </div>
 </div>

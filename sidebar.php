@@ -62,7 +62,7 @@ if ( $options['whatblog'] == 0 ) {
 		//echo '<pre style="display:none">'. print_r($post,true) .'</pre>';
 		endforeach;
 		*/
-		$nlkfeed = 'http://www.jacuzzihottubs.com/feed/';
+		$nlkfeed = 'http://www.jacuzzi.com/hot-tubs/feed/';
 		include_once(ABSPATH . WPINC . '/feed.php');
 		$rss = fetch_feed($nlkfeed);
 		$instamax = 0;
