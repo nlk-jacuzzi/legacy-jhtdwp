@@ -53,6 +53,7 @@ function progo_setup() {
 	
 	// add custom filters
 	add_filter( 'body_class', 'progo_bodyclasses' );
+	add_filter( 'the_content', 'progo_jht_url_fix' );
 	add_filter( 'wp_nav_menu_objects', 'progo_menufilter', 10, 2 );
 	add_filter( 'site_transient_update_themes', 'progo_update_check' );
 	add_filter( 'admin_post_thumbnail_html', 'progo_admin_post_thumbnail_html' );
@@ -1941,6 +1942,16 @@ function progo_bodyclasses($classes) {
 	}
 	
 	return $classes;
+}
+endif;
+if ( ! function_exists( 'progo_jht_url_fix' ) ):
+/**
+ * since jacuzzihottubs.com moved to jacuzzi.com/hot-tubs , adjust hard set URLs in the_content before page render
+ * @param the content for post/page
+ * @since JHTDWP 1.3.1
+ */
+function progo_jht_url_fix($content) {
+	return str_replace( 'http://www.jacuzzihottubs.com', 'http://www.jacuzzi.com/hot-tubs', $content );
 }
 endif;
 if ( ! function_exists( 'jhtdwp_checktoshowblogs' ) ) :
