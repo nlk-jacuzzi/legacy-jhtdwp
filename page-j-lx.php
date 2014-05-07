@@ -26,7 +26,7 @@ get_header();
             <strong>J-LX</strong><br />
             Seats: 6 Adults<br />
             Jets: 31<br />
-            <a href="http://www.jacuzzi.com/hot-tubs/j-lx/j-lx/">view details</a>
+            <a href="http://www.jacuzzi.com/hot-tubs/j-lx/j-lx/" target="_blank">view details</a>
         </div>
     </div>
     <div class="tub">
@@ -35,7 +35,7 @@ get_header();
             <strong>J-LXL</strong><br />
             Seats: 5 Adults<br />
             Jets: 38<br />
-            <a href="http://www.jacuzzi.com/hot-tubs/j-lx/j-lxl/">view details</a>
+            <a href="http://www.jacuzzi.com/hot-tubs/j-lx/j-lxl/" target="_blank">view details</a>
         </div>
     </div>
 </div>

@@ -26,7 +26,7 @@ get_header();
             <strong>J-495</strong><br />
             Seats: 7-9 Adults<br />
             Jets: 62<br />
-            <a href="http://www.jacuzzi.com/hot-tubs/j-400/j-495/">view details</a>
+            <a href="http://www.jacuzzi.com/hot-tubs/j-400/j-495/" target="_blank">view details</a>
         </div>
     </div>
     <div class="tub">
@@ -35,7 +35,7 @@ get_header();
             <strong>J-480</strong><br />
             Seats: 6 Adults<br />
             Jets: 52<br />
-            <a href="http://www.jacuzzi.com/hot-tubs/j-400/j-480/">view details</a>
+            <a href="http://www.jacuzzi.com/hot-tubs/j-400/j-480/" target="_blank">view details</a>
         </div>
     </div>
     <div class="tub">
@@ -44,7 +44,7 @@ get_header();
             <strong>J-470</strong><br />
             Seats: 6-7 Adults<br />
             Jets: 43<br />
-            <a href="http://www.jacuzzi.com/hot-tubs/j-400/j-470/">view details</a>
+            <a href="http://www.jacuzzi.com/hot-tubs/j-400/j-470/" target="_blank">view details</a>
         </div>
     </div>
     <div class="tub">
@@ -53,7 +53,7 @@ get_header();
             <strong>J-465</strong><br />
             Seats: 6 Adults<br />
             Jets: 39<br />
-            <a href="http://www.jacuzzi.com/hot-tubs/j-400/j-465/">view details</a>
+            <a href="http://www.jacuzzi.com/hot-tubs/j-400/j-465/" target="_blank">view details</a>
         </div>
     </div>
     <div class="tub">
@@ -62,7 +62,7 @@ get_header();
             <strong>J-425</strong><br />
             Seats: 4-5 Adults<br />
             Jets: 27<br />
-            <a href="http://www.jacuzzi.com/hot-tubs/j-400/j-425/">view details</a>
+            <a href="http://www.jacuzzi.com/hot-tubs/j-400/j-425/" target="_blank">view details</a>
         </div>
     </div>
     <div class="tub">
@@ -71,7 +71,7 @@ get_header();
             <strong>J-415</strong><br />
             Seats: 2-3 Adults<br />
             Jets: 21<br />
-            <a href="http://www.jacuzzi.com/hot-tubs/j-400/j-415/">view details</a>
+            <a href="http://www.jacuzzi.com/hot-tubs/j-400/j-415/" target="_blank">view details</a>
         </div>
     </div>
 </div>
